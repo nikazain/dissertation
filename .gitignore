@@ -1,0 +1,13 @@
+dissenv/
+__pycache__/
+.mypy_cache/
+*.parquet
+data/
+.DS_Store
+cat >> .gitignore << 'EOF'
+*.safetensors
+*.csv
+detector_A/
+detector_AB/
+detector_ABC/
+EOF
