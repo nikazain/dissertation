@@ -27,7 +27,7 @@ from metrics import evaluate
 from seeding import get_device
 
 EPOCHS = 5
-BATCH_SIZE = 16
+BATCH_SIZE = 64
 WARMUP_RATIO = 0.06
 
 

@@ -18,7 +18,7 @@ from sklearn.metrics import roc_auc_score
 from data_loading import tokenizer, MAX_LEN
 from seeding import get_device
 
-BATCH_SIZE = 16
+BATCH_SIZE = 64
 
 def evaluate(model, data, max_len=MAX_LEN):
     """Run `model` over a dataframe with columns text, label. Return metrics."""
