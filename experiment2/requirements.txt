@@ -1,0 +1,8 @@
+torch
+transformers
+datasets
+pandas
+pyarrow
+scikit-learn
+numpy
+EOF 
