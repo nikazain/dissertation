@@ -10,12 +10,19 @@ Fills the 6x5 matrix R (the winner at each stage):
     col j    performance on the test set of stage j+1
 
 Saves results.json after every stage, so a crash costs one stage, not the run.
+
+Persistence for later analysis (all inference-only follow-ups depend on these):
+    probs/{tag}_stage{j}.npz   per-row P(machine) + labels for every test eval
+    checkpoints/stage{s}_lr{lr}.pt   each stage winner, fp16 state_dict
+    results.json also stores all four metrics per cell (R_full, branches_full)
 """
 
 import copy
 import json
+import os
 
 import numpy as np
+import torch
 
 import data_loading as dl
 from config import SEED, STAGES
@@ -25,27 +32,52 @@ from train import new_model, train_stage
 
 LEARNING_RATES = [1e-5, 3e-5, 5e-5]
 RESULTS_PATH = "results.json"
+PROBS_DIR = "probs"
+CKPT_DIR = "checkpoints"
 
 
-def evaluate_all_stages(model):
-    """Score `model` on every stage's test set. Returns one row of R."""
-    row = []
+def evaluate_all_stages(model, tag):
+    """Score `model` on every stage's test set. Saves per-row probabilities
+    under `tag`. Returns (auroc_row, full_metrics_row)."""
+    row, full_row = [], []
     for stage in STAGES:
-        result = evaluate(model, dl.stage_eval(stage, "test"))
-        row.append(result["auroc"])
+        data = dl.stage_eval(stage, "test")
+        result = evaluate(model, data, return_probs=True)
+        np.savez(
+            os.path.join(PROBS_DIR, f"{tag}_stage{stage}.npz"),
+            probs=result["machine_probs"],
+            labels=data["label"].to_numpy(),
+        )
+        row.append(float(result["auroc"]))
+        full_row.append({
+            k: float(v) for k, v in result.items() if k != "machine_probs"
+        })
         print(f"    test stage {stage}: auroc {result['auroc']:.4f}"
               f"  human_rec {result['human_rec']:.4f}"
               f"  machine_rec {result['machine_rec']:.4f}")
-    return row
+    return row, full_row
 
 
-def save(R, chosen_lrs, branches, note):
+def save_checkpoint(model, stage, lr):
+    """fp16 state_dict (floats halved, integer buffers untouched).
+    Loading back into a fresh fp32 model works directly:
+    new_model().load_state_dict(torch.load(path)) casts on copy."""
+    sd = {
+        k: (v.half() if v.is_floating_point() else v)
+        for k, v in model.state_dict().items()
+    }
+    torch.save(sd, os.path.join(CKPT_DIR, f"stage{stage}_lr{lr}.pt"))
+
+
+def save(R, R_full, chosen_lrs, branches, branches_full, note):
     out = {
         "note": note,
         "learning_rates": LEARNING_RATES,
         "chosen_lr_per_stage": chosen_lrs,
         "R": R,
+        "R_full": R_full,
         "branches": branches,
+        "branches_full": branches_full,
     }
     if len(R) == 6:
         A = np.array(R)
@@ -59,13 +91,17 @@ def save(R, chosen_lrs, branches, note):
 
 def main():
     seed_everything(SEED)
+    os.makedirs(PROBS_DIR, exist_ok=True)
+    os.makedirs(CKPT_DIR, exist_ok=True)
 
     # Row 0: the untrained model, the FWT baseline.
     print("evaluating untrained baseline (M0)")
-    R = [evaluate_all_stages(new_model())]
+    row0, full0 = evaluate_all_stages(new_model(), "M0")
+    R, R_full = [row0], [full0]
     chosen_lrs = {}
     branches = {}
-    save(R, chosen_lrs, branches, "in progress")
+    branches_full = {}
+    save(R, R_full, chosen_lrs, branches, branches_full, "in progress")
 
     model = new_model()  # the current winner, carried between stages
 
@@ -88,7 +124,8 @@ def main():
             print(f"  lr {lr}: val auroc {val_auroc:.4f}")
 
             print(f"  evaluating lr {lr} on all test stages")
-            branches[f"stage{stage}_lr{lr}"] = evaluate_all_stages(branch)
+            tag = f"stage{stage}_lr{lr}"
+            branches[tag], branches_full[tag] = evaluate_all_stages(branch, tag)
 
             if val_auroc > best_val:
                 best_val = val_auroc
@@ -98,10 +135,12 @@ def main():
         print(f"\n  stage {stage} winner: lr {best_lr} (val auroc {best_val:.4f})")
         model = best_model
         chosen_lrs[f"stage{stage}"] = best_lr
+        save_checkpoint(model, stage, best_lr)
         R.append(branches[f"stage{stage}_lr{best_lr}"])
-        save(R, chosen_lrs, branches, "in progress")
+        R_full.append(branches_full[f"stage{stage}_lr{best_lr}"])
+        save(R, R_full, chosen_lrs, branches, branches_full, "in progress")
 
-    save(R, chosen_lrs, branches, "complete")
+    save(R, R_full, chosen_lrs, branches, branches_full, "complete")
 
     A = np.array(R)
     print(f"\nchosen learning rates: {chosen_lrs}")

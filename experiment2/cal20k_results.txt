@@ -1,0 +1,31 @@
+nohup: ignoring input
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+TRAIN_CAP = 20000
+Loading weights: 100%|██████████| 269/269 [00:00<00:00, 23945.58it/s]
+[transformers] LongformerForSequenceClassification LOAD REPORT from: allenai/longformer-base-4096
+Key                            | Status     | 
+-------------------------------+------------+-
+lm_head.layer_norm.weight      | UNEXPECTED | 
+longformer.pooler.dense.bias   | UNEXPECTED | 
+lm_head.layer_norm.bias        | UNEXPECTED | 
+lm_head.bias                   | UNEXPECTED | 
+longformer.pooler.dense.weight | UNEXPECTED | 
+lm_head.decoder.weight         | UNEXPECTED | 
+lm_head.dense.bias             | UNEXPECTED | 
+lm_head.dense.weight           | UNEXPECTED | 
+classifier.dense.bias          | MISSING    | 
+classifier.out_proj.weight     | MISSING    | 
+classifier.dense.weight        | MISSING    | 
+classifier.out_proj.bias       | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[transformers] Initializing global attention on CLS token...
+stage 1 lr 3e-05 epoch 1: val auroc 0.9769
+stage 1 lr 3e-05 epoch 2: val auroc 0.9822
+stage 1 lr 3e-05 epoch 3: val auroc 0.9789
+stage 1 lr 3e-05 epoch 4: val auroc 0.9805
+stage 1 lr 3e-05 epoch 5: val auroc 0.9795
+total: 352.2 min
+per epoch (incl. val pass): 70.4 min

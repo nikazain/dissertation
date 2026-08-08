@@ -1,7 +1,7 @@
 """
 Building datasets from the frozen files produced in prepare_data.py
 same human rows for each stage (first N by shuffle rank)
-machine rows are also chosen by using first N by shuffle_rankgit status
+machine rows are also cut to the first N by shuffle_rank when TRAIN_CAP is set
 
 human_sample(split) - the fixed human rows for a split
 stage_train(stage) - stage's machine train rows + fixed human sample

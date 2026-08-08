@@ -43,12 +43,16 @@ def new_model():
 
 
 def train_stage(model, stage, lr, limit=None, max_len=MAX_LEN,
-                batch_size=MICRO_BATCH, accum_steps=ACCUM_STEPS):
+                batch_size=MICRO_BATCH, accum_steps=ACCUM_STEPS,
+                train_df=None, val_df=None):
     device = get_device()
     model.to(device)
 
-    train_data = dl.stage_train(stage)
-    val_data = dl.stage_eval(stage, "validation")
+    # train_df / val_df override the stage data when provided (used by
+    # pooled.py so the upper bound trains with this exact loop; `stage`
+    # is then only a label for log lines).
+    train_data = dl.stage_train(stage) if train_df is None else train_df
+    val_data = dl.stage_eval(stage, "validation") if val_df is None else val_df
 
     # Smoke-test mode: use only a small chunk. Shuffle first so the chunk
     # contains both machine and human rows (otherwise validation AUROC has

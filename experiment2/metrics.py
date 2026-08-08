@@ -20,8 +20,11 @@ from seeding import get_device
 
 BATCH_SIZE = 64
 
-def evaluate(model, data, max_len=MAX_LEN):
-    """Run `model` over a dataframe with columns text, label. Return metrics."""
+def evaluate(model, data, max_len=MAX_LEN, return_probs=False):
+    """Run `model` over a dataframe with columns text, label. Return metrics.
+    With return_probs=True the dict also contains "machine_probs", the
+    per-row P(machine) array in the row order of `data` (needed for the
+    decomposition analysis and any post-hoc metric)."""
     device = get_device()
     model.eval()
     model.to(device)
@@ -56,12 +59,15 @@ def evaluate(model, data, max_len=MAX_LEN):
     human_rec = (~predicted_machine[is_human]).mean()
     avg_rec = (machine_rec + human_rec) / 2
 
-    return {
+    out = {
         "auroc": auroc,
         "human_rec": human_rec,
         "machine_rec": machine_rec,
         "avg_rec": avg_rec,
     }
+    if return_probs:
+        out["machine_probs"] = machine_probs
+    return out
 
 def acc(R):
     """End-state: mean performance of the final model over all test stages."""
