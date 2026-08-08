@@ -13,6 +13,10 @@ Smoke test on a small chunk (confirms the loop runs before spending compute):
 Keeps the epoch with the best validation AUROC. Validation uses the
 CURRENT stage's validation set only, so the naive sequential baseline is
 not accidentally helped to resist forgetting.
+
+Memory: micro-batches of MICRO_BATCH with ACCUM_STEPS accumulation give
+an effective batch of 64 (unchanged), sized for 24GB GPUs at MAX_LEN 1024.
+fp16 autocast runs on CUDA only; MPS/CPU smoke tests are unaffected.
 """
 
 import copy
@@ -27,8 +31,10 @@ from metrics import evaluate
 from seeding import get_device
 
 EPOCHS = 5
-BATCH_SIZE = 64
+MICRO_BATCH = 8    # rows per forward/backward pass
+ACCUM_STEPS = 8    # optimizer step every 8 micro-batches -> effective 64
 WARMUP_RATIO = 0.06
+USE_AMP = True     # fp16 on CUDA; ignored elsewhere
 
 
 def new_model():
@@ -36,7 +42,8 @@ def new_model():
     return AutoModelForSequenceClassification.from_pretrained(MODEL_NAME, num_labels=2)
 
 
-def train_stage(model, stage, lr, limit=None, max_len=MAX_LEN, batch_size=BATCH_SIZE):
+def train_stage(model, stage, lr, limit=None, max_len=MAX_LEN,
+                batch_size=MICRO_BATCH, accum_steps=ACCUM_STEPS):
     device = get_device()
     model.to(device)
 
@@ -64,26 +71,36 @@ def train_stage(model, stage, lr, limit=None, max_len=MAX_LEN, batch_size=BATCH_
     optimizer = torch.optim.AdamW(
         model.parameters(), lr=lr, betas=(0.9, 0.98), eps=1e-6, weight_decay=0.01
     )
-    total_steps = len(loader) * EPOCHS
+    steps_per_epoch = -(-len(loader) // accum_steps)  # ceil
+    total_steps = steps_per_epoch * EPOCHS
     scheduler = get_linear_schedule_with_warmup(
         optimizer, int(WARMUP_RATIO * total_steps), total_steps
     )
+
+    amp = USE_AMP and device.type == "cuda"
+    scaler = torch.amp.GradScaler("cuda", enabled=amp)
 
     best_auroc = -1
     best_weights = None
 
     for epoch in range(EPOCHS):
         model.train()
-        for input_ids, attention_mask, y in loader:
-            optimizer.zero_grad()
-            out = model(
-                input_ids=input_ids.to(device),
-                attention_mask=attention_mask.to(device),
-                labels=y.to(device),
-            )
-            out.loss.backward()
-            optimizer.step()
-            scheduler.step()
+        optimizer.zero_grad()
+        for i, (input_ids, attention_mask, y) in enumerate(loader):
+            with torch.amp.autocast("cuda", enabled=amp):
+                out = model(
+                    input_ids=input_ids.to(device),
+                    attention_mask=attention_mask.to(device),
+                    labels=y.to(device),
+                )
+                loss = out.loss / accum_steps
+            scaler.scale(loss).backward()
+
+            if (i + 1) % accum_steps == 0 or (i + 1) == len(loader):
+                scaler.step(optimizer)
+                scaler.update()
+                scheduler.step()
+                optimizer.zero_grad()
 
         auroc = evaluate(model, val_data, max_len=max_len)["auroc"]
         print(f"stage {stage} lr {lr} epoch {epoch + 1}: val auroc {auroc:.4f}")

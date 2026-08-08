@@ -1,6 +1,8 @@
 """
 Fixed choices for methodology 
 """
+import os
+TRAIN_CAP = int(os.environ["TRAIN_CAP"]) if "TRAIN_CAP" in os.environ else None
 
 SEED = 42
 HF_DATASET = "yaful/MAGE"
