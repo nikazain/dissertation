@@ -28,6 +28,10 @@ from metrics import acc, bwt, evaluate, fwt
 from seeding import seed_everything
 from train import new_model, train_stage
 
+if torch.cuda.is_available():
+    _reserve = torch.empty(20 * 1024**3 // 4, dtype=torch.float32, device="cuda")
+    del _reserve
+
 LEARNING_RATES = [1e-5, 3e-5, 5e-5]
 RESULTS_PATH = "results_cumulative.json"
 PROBS_DIR = "probs"
