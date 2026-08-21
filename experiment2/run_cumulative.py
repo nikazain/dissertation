@@ -94,18 +94,42 @@ def main():
     os.makedirs(PROBS_DIR, exist_ok=True)
     os.makedirs(CKPT_DIR, exist_ok=True)
 
-    print("evaluating untrained baseline (M0)")
-    row0, full0 = evaluate_all_stages(new_model(), "M0")
-    R, R_full = [row0], [full0]
-    chosen_lrs = {}
-    selection_log = {}
-    branches = {}
-    branches_full = {}
-    save(R, R_full, chosen_lrs, selection_log, branches, branches_full, "in progress")
+    R, R_full = [], []
+    chosen_lrs, selection_log = {}, {}
+    branches, branches_full = {}, {}
+    done_stage = 0
+
+    if os.path.exists(RESULTS_PATH):
+        with open(RESULTS_PATH) as f:
+            prev = json.load(f)
+        R = prev["R"]
+        R_full = prev["R_full"]
+        chosen_lrs = prev["chosen_lr_per_stage"]
+        selection_log = prev["selection_log"]
+        branches = prev["branches"]
+        branches_full = prev["branches_full"]
+        done_stage = len(R) - 1
+        print(f"resuming: {done_stage} completed stage(s) found in {RESULTS_PATH}")
+
+    if done_stage == 0:
+        print("evaluating untrained baseline (M0)")
+        row0, full0 = evaluate_all_stages(new_model(), "M0")
+        R, R_full = [row0], [full0]
+        save(R, R_full, chosen_lrs, selection_log, branches, branches_full, "in progress")
 
     model = new_model()
+    if done_stage > 0:
+        lr = chosen_lrs[f"stage{done_stage}"]
+        ckpt = torch.load(
+            os.path.join(CKPT_DIR, f"cum_stage{done_stage}_lr{lr}.pt"),
+            map_location="cpu",
+        )
+        model.load_state_dict(ckpt)
+        print(f"loaded checkpoint cum_stage{done_stage}_lr{lr}.pt")
 
     for stage in STAGES:
+        if stage <= done_stage:
+            continue
         print(f"\n=== stage {stage} ===")
         start_weights = copy.deepcopy(model.state_dict())
         seen_val = {s: dl.stage_eval(s, "validation") for s in STAGES if s <= stage}
@@ -120,7 +144,6 @@ def main():
             branch.load_state_dict(start_weights)
             branch = train_stage(branch, stage, lr)
 
-            # Selection score: mean val AUROC over stages seen so far.
             per_stage_val = {}
             for s, vdata in seen_val.items():
                 per_stage_val[f"stage{s}"] = float(evaluate(branch, vdata)["auroc"])
