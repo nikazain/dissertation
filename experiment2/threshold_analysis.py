@@ -1,25 +1,22 @@
 """
 Experiment 3: re-grade every saved model with real decision thresholds.
 
-Lampos's point: AUROC assumes a perfect threshold, which never exists in
-deployment. This script produces the realistic picture. No training, no GPU.
+Metric: ACCURACY, per Lampos (meeting 7): next to AUROC, the comparable
+metric for this binary task is accuracy. Thresholds are fitted on
+VALIDATION probabilities by maximising accuracy, then applied to TEST
+probabilities. Machine/human recall are kept as secondary diagnostics.
 
-Three grading regimes, all evaluated on the untouched TEST sets:
-  fixed      threshold 0.5 (what the original logs implicitly used)
+Three regimes, all evaluated on the untouched TEST sets:
+  fixed      threshold 0.5
   deployed   one threshold per model, fitted on the validation set of the
              stage it was just trained on (what a practitioner would have)
   refit      threshold re-fitted per (model, test stage) on that stage's
-             validation set (how much is repairable with a sliver of old
-             validation data and zero retraining)
+             validation set (the free repair)
 
-Thresholds are always fitted on VALIDATION probabilities and applied to TEST
-probabilities, so test data never influences the fit.
-
-Inputs (produced by experiment2):
-  ../experiment2/results.json, results_pooled.json   (which lr won where)
-  ../experiment2/probs/{tag}_stage{j}.npz            (test probabilities)
-  ../experiment2/probs/val_{tag}_stage{j}.npz        (validation, from
-                                                      score_validation.py)
+Inputs (all already produced):
+  ../experiment2/results.json, results_pooled.json
+  ../experiment2/probs/{tag}_stage{j}.npz          test probabilities
+  ../experiment2/probs/val_{tag}_stage{j}.npz      validation probabilities
 Output: results_thresholds.json + printed matrices.
 Run from inside experiment3/:  python threshold_analysis.py
 """
@@ -39,20 +36,22 @@ def load(path):
     return d["probs"], d["labels"]
 
 
-def rec(probs, labels, t):
+def grade(probs, labels, t):
     pred_machine = probs > t
-    machine_rec = float(pred_machine[labels == 0].mean())
-    human_rec = float((~pred_machine)[labels == 1].mean())
-    return {"machine_rec": machine_rec, "human_rec": human_rec,
-            "avg_rec": (machine_rec + human_rec) / 2, "threshold": float(t)}
+    correct = np.where(labels == 0, pred_machine, ~pred_machine)
+    return {
+        "accuracy": float(correct.mean()),
+        "machine_rec": float(pred_machine[labels == 0].mean()),
+        "human_rec": float((~pred_machine)[labels == 1].mean()),
+        "threshold": float(t),
+    }
 
 
 def fit_threshold(probs, labels):
-    """Threshold maximising balanced accuracy (avg_rec) on the given set."""
+    """Threshold maximising ACCURACY on the given (validation) set."""
     pred = probs[None, :] > GRID[:, None]
-    m = pred[:, labels == 0].mean(axis=1)
-    h = (~pred)[:, labels == 1].mean(axis=1)
-    return GRID[int(np.argmax((m + h) / 2))]
+    correct = np.where(labels[None, :] == 0, pred, ~pred)
+    return GRID[int(np.argmax(correct.mean(axis=1)))]
 
 
 def main():
@@ -67,12 +66,10 @@ def main():
         models.append((f"M{s}", f"stage{s}_lr{lr}", s))
     models.append(("pooled", f"pooled_lr{pooled['chosen_lr']}", None))
 
-    out = {"grid_step": 0.001, "regimes": {}}
+    out = {"metric": "accuracy", "grid_step": 0.001, "regimes": {}}
     tables = {r: {} for r in ["fixed", "deployed", "refit"]}
 
     for name, tag, own_stage in models:
-        # deployed threshold: fitted once, on the just-trained stage's val
-        # (pooled: fitted on all stages' val concatenated)
         if own_stage is not None:
             vp, vl = load(os.path.join(PROBS, f"val_{tag}_stage{own_stage}.npz"))
         else:
@@ -85,24 +82,23 @@ def main():
             tables[r][name] = {}
         for s in range(1, 6):
             tp, tl = load(os.path.join(PROBS, f"{tag}_stage{s}.npz"))
-            tables["fixed"][name][f"S{s}"] = rec(tp, tl, 0.5)
-            tables["deployed"][name][f"S{s}"] = rec(tp, tl, t_deploy)
+            tables["fixed"][name][f"S{s}"] = grade(tp, tl, 0.5)
+            tables["deployed"][name][f"S{s}"] = grade(tp, tl, t_deploy)
             vps, vls = load(os.path.join(PROBS, f"val_{tag}_stage{s}.npz"))
-            tables["refit"][name][f"S{s}"] = rec(tp, tl, fit_threshold(vps, vls))
+            tables["refit"][name][f"S{s}"] = grade(tp, tl, fit_threshold(vps, vls))
 
     out["regimes"] = tables
     with open("results_thresholds.json", "w") as f:
         json.dump(out, f, indent=2)
 
     for r in ["fixed", "deployed", "refit"]:
-        print(f"\n=== {r}: avg_rec (machine_rec) ===")
-        header = "model    " + "".join(f"   S{s}            " for s in range(1, 6))
-        print(header)
+        print(f"\n=== {r}: accuracy (machine_rec) ===")
+        print("model    " + "".join(f"   S{s}            " for s in range(1, 6)))
         for name, _, _ in models:
             row = f"{name:8s}"
             for s in range(1, 6):
                 c = tables[r][name][f"S{s}"]
-                row += f"  {c['avg_rec']:.3f} ({c['machine_rec']:.3f})"
+                row += f"  {c['accuracy']:.3f} ({c['machine_rec']:.3f})"
             print(row)
 
     print("\nsaved results_thresholds.json")
