@@ -1,0 +1,413 @@
+nohup: ignoring input
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+
+=== stage1_lr3e-05 ===
+Loading weights:   0%|          | 0/269 [00:00<?, ?it/s]Loading weights: 100%|██████████| 269/269 [00:00<00:00, 52967.83it/s]
+[transformers] [1mLongformerForSequenceClassification LOAD REPORT[0m from: allenai/longformer-base-4096
+Key                            | Status     | 
+-------------------------------+------------+-
+lm_head.bias                   | UNEXPECTED | 
+lm_head.layer_norm.weight      | UNEXPECTED | 
+lm_head.decoder.weight         | UNEXPECTED | 
+lm_head.layer_norm.bias        | UNEXPECTED | 
+lm_head.dense.bias             | UNEXPECTED | 
+longformer.pooler.dense.weight | UNEXPECTED | 
+longformer.pooler.dense.bias   | UNEXPECTED | 
+lm_head.dense.weight           | UNEXPECTED | 
+classifier.dense.weight        | MISSING    | 
+classifier.dense.bias          | MISSING    | 
+classifier.out_proj.weight     | MISSING    | 
+classifier.out_proj.bias       | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+  budget 1024 tokens
+    saved trunc1024_stage1_lr3e-05_stage1.npz  mean p(machine): machine 0.976 human 0.266
+    saved trunc1024_stage1_lr3e-05_stage2.npz  mean p(machine): machine 0.964 human 0.266
+    saved trunc1024_stage1_lr3e-05_stage3.npz  mean p(machine): machine 0.896 human 0.266
+    saved trunc1024_stage1_lr3e-05_stage4.npz  mean p(machine): machine 0.960 human 0.266
+    saved trunc1024_stage1_lr3e-05_stage5.npz  mean p(machine): machine 0.962 human 0.266
+    saved trunc1024_val_stage1_lr3e-05_stage1.npz  mean p(machine): machine 0.978 human 0.264
+  budget 512 tokens
+    saved trunc512_stage1_lr3e-05_stage1.npz  mean p(machine): machine 0.977 human 0.280
+    saved trunc512_stage1_lr3e-05_stage2.npz  mean p(machine): machine 0.964 human 0.280
+    saved trunc512_stage1_lr3e-05_stage3.npz  mean p(machine): machine 0.896 human 0.280
+    saved trunc512_stage1_lr3e-05_stage4.npz  mean p(machine): machine 0.960 human 0.280
+    saved trunc512_stage1_lr3e-05_stage5.npz  mean p(machine): machine 0.962 human 0.280
+    saved trunc512_val_stage1_lr3e-05_stage1.npz  mean p(machine): machine 0.978 human 0.277
+  budget 256 tokens
+[transformers] Input ids are automatically padded to be a multiple of `config.attention_window`: 512
+    saved trunc256_stage1_lr3e-05_stage1.npz  mean p(machine): machine 0.976 human 0.305
+    saved trunc256_stage1_lr3e-05_stage2.npz  mean p(machine): machine 0.961 human 0.305
+    saved trunc256_stage1_lr3e-05_stage3.npz  mean p(machine): machine 0.895 human 0.305
+    saved trunc256_stage1_lr3e-05_stage4.npz  mean p(machine): machine 0.959 human 0.305
+    saved trunc256_stage1_lr3e-05_stage5.npz  mean p(machine): machine 0.952 human 0.305
+    saved trunc256_val_stage1_lr3e-05_stage1.npz  mean p(machine): machine 0.976 human 0.303
+  budget 128 tokens
+    saved trunc128_stage1_lr3e-05_stage1.npz  mean p(machine): machine 0.974 human 0.478
+    saved trunc128_stage1_lr3e-05_stage2.npz  mean p(machine): machine 0.960 human 0.478
+    saved trunc128_stage1_lr3e-05_stage3.npz  mean p(machine): machine 0.894 human 0.478
+    saved trunc128_stage1_lr3e-05_stage4.npz  mean p(machine): machine 0.958 human 0.478
+    saved trunc128_stage1_lr3e-05_stage5.npz  mean p(machine): machine 0.945 human 0.478
+    saved trunc128_val_stage1_lr3e-05_stage1.npz  mean p(machine): machine 0.973 human 0.473
+  budget 64 tokens
+    saved trunc64_stage1_lr3e-05_stage1.npz  mean p(machine): machine 0.969 human 0.776
+    saved trunc64_stage1_lr3e-05_stage2.npz  mean p(machine): machine 0.958 human 0.776
+    saved trunc64_stage1_lr3e-05_stage3.npz  mean p(machine): machine 0.906 human 0.776
+    saved trunc64_stage1_lr3e-05_stage4.npz  mean p(machine): machine 0.965 human 0.776
+    saved trunc64_stage1_lr3e-05_stage5.npz  mean p(machine): machine 0.960 human 0.776
+    saved trunc64_val_stage1_lr3e-05_stage1.npz  mean p(machine): machine 0.971 human 0.773
+  budget 32 tokens
+    saved trunc32_stage1_lr3e-05_stage1.npz  mean p(machine): machine 0.947 human 0.907
+    saved trunc32_stage1_lr3e-05_stage2.npz  mean p(machine): machine 0.934 human 0.907
+    saved trunc32_stage1_lr3e-05_stage3.npz  mean p(machine): machine 0.933 human 0.907
+    saved trunc32_stage1_lr3e-05_stage4.npz  mean p(machine): machine 0.952 human 0.907
+    saved trunc32_stage1_lr3e-05_stage5.npz  mean p(machine): machine 0.945 human 0.907
+    saved trunc32_val_stage1_lr3e-05_stage1.npz  mean p(machine): machine 0.941 human 0.907
+
+=== stage2_lr5e-05 ===
+Loading weights:   0%|          | 0/269 [00:00<?, ?it/s]Loading weights: 100%|██████████| 269/269 [00:00<00:00, 40335.61it/s]
+[transformers] [1mLongformerForSequenceClassification LOAD REPORT[0m from: allenai/longformer-base-4096
+Key                            | Status     | 
+-------------------------------+------------+-
+lm_head.bias                   | UNEXPECTED | 
+lm_head.layer_norm.weight      | UNEXPECTED | 
+lm_head.decoder.weight         | UNEXPECTED | 
+lm_head.layer_norm.bias        | UNEXPECTED | 
+lm_head.dense.bias             | UNEXPECTED | 
+longformer.pooler.dense.weight | UNEXPECTED | 
+longformer.pooler.dense.bias   | UNEXPECTED | 
+lm_head.dense.weight           | UNEXPECTED | 
+classifier.dense.weight        | MISSING    | 
+classifier.dense.bias          | MISSING    | 
+classifier.out_proj.weight     | MISSING    | 
+classifier.out_proj.bias       | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+  budget 1024 tokens
+    saved trunc1024_stage2_lr5e-05_stage1.npz  mean p(machine): machine 0.743 human 0.061
+    saved trunc1024_stage2_lr5e-05_stage2.npz  mean p(machine): machine 0.989 human 0.061
+    saved trunc1024_stage2_lr5e-05_stage3.npz  mean p(machine): machine 0.572 human 0.061
+    saved trunc1024_stage2_lr5e-05_stage4.npz  mean p(machine): machine 0.782 human 0.061
+    saved trunc1024_stage2_lr5e-05_stage5.npz  mean p(machine): machine 0.470 human 0.061
+    saved trunc1024_val_stage2_lr5e-05_stage2.npz  mean p(machine): machine 0.990 human 0.067
+  budget 512 tokens
+    saved trunc512_stage2_lr5e-05_stage1.npz  mean p(machine): machine 0.743 human 0.063
+    saved trunc512_stage2_lr5e-05_stage2.npz  mean p(machine): machine 0.989 human 0.063
+    saved trunc512_stage2_lr5e-05_stage3.npz  mean p(machine): machine 0.563 human 0.063
+    saved trunc512_stage2_lr5e-05_stage4.npz  mean p(machine): machine 0.782 human 0.063
+    saved trunc512_stage2_lr5e-05_stage5.npz  mean p(machine): machine 0.451 human 0.063
+    saved trunc512_val_stage2_lr5e-05_stage2.npz  mean p(machine): machine 0.990 human 0.069
+  budget 256 tokens
+    saved trunc256_stage2_lr5e-05_stage1.npz  mean p(machine): machine 0.739 human 0.068
+    saved trunc256_stage2_lr5e-05_stage2.npz  mean p(machine): machine 0.988 human 0.068
+    saved trunc256_stage2_lr5e-05_stage3.npz  mean p(machine): machine 0.541 human 0.068
+    saved trunc256_stage2_lr5e-05_stage4.npz  mean p(machine): machine 0.781 human 0.068
+    saved trunc256_stage2_lr5e-05_stage5.npz  mean p(machine): machine 0.405 human 0.068
+    saved trunc256_val_stage2_lr5e-05_stage2.npz  mean p(machine): machine 0.989 human 0.074
+  budget 128 tokens
+    saved trunc128_stage2_lr5e-05_stage1.npz  mean p(machine): machine 0.748 human 0.135
+    saved trunc128_stage2_lr5e-05_stage2.npz  mean p(machine): machine 0.985 human 0.135
+    saved trunc128_stage2_lr5e-05_stage3.npz  mean p(machine): machine 0.551 human 0.135
+    saved trunc128_stage2_lr5e-05_stage4.npz  mean p(machine): machine 0.780 human 0.135
+    saved trunc128_stage2_lr5e-05_stage5.npz  mean p(machine): machine 0.457 human 0.135
+    saved trunc128_val_stage2_lr5e-05_stage2.npz  mean p(machine): machine 0.987 human 0.138
+  budget 64 tokens
+    saved trunc64_stage2_lr5e-05_stage1.npz  mean p(machine): machine 0.833 human 0.477
+    saved trunc64_stage2_lr5e-05_stage2.npz  mean p(machine): machine 0.969 human 0.477
+    saved trunc64_stage2_lr5e-05_stage3.npz  mean p(machine): machine 0.639 human 0.477
+    saved trunc64_stage2_lr5e-05_stage4.npz  mean p(machine): machine 0.876 human 0.477
+    saved trunc64_stage2_lr5e-05_stage5.npz  mean p(machine): machine 0.761 human 0.477
+    saved trunc64_val_stage2_lr5e-05_stage2.npz  mean p(machine): machine 0.967 human 0.473
+  budget 32 tokens
+    saved trunc32_stage2_lr5e-05_stage1.npz  mean p(machine): machine 0.571 human 0.508
+    saved trunc32_stage2_lr5e-05_stage2.npz  mean p(machine): machine 0.524 human 0.508
+    saved trunc32_stage2_lr5e-05_stage3.npz  mean p(machine): machine 0.506 human 0.508
+    saved trunc32_stage2_lr5e-05_stage4.npz  mean p(machine): machine 0.602 human 0.508
+    saved trunc32_stage2_lr5e-05_stage5.npz  mean p(machine): machine 0.565 human 0.508
+    saved trunc32_val_stage2_lr5e-05_stage2.npz  mean p(machine): machine 0.533 human 0.499
+
+=== stage3_lr5e-05 ===
+Loading weights:   0%|          | 0/269 [00:00<?, ?it/s]Loading weights: 100%|██████████| 269/269 [00:00<00:00, 44343.18it/s]
+[transformers] [1mLongformerForSequenceClassification LOAD REPORT[0m from: allenai/longformer-base-4096
+Key                            | Status     | 
+-------------------------------+------------+-
+lm_head.bias                   | UNEXPECTED | 
+lm_head.layer_norm.weight      | UNEXPECTED | 
+lm_head.decoder.weight         | UNEXPECTED | 
+lm_head.layer_norm.bias        | UNEXPECTED | 
+lm_head.dense.bias             | UNEXPECTED | 
+longformer.pooler.dense.weight | UNEXPECTED | 
+longformer.pooler.dense.bias   | UNEXPECTED | 
+lm_head.dense.weight           | UNEXPECTED | 
+classifier.dense.weight        | MISSING    | 
+classifier.dense.bias          | MISSING    | 
+classifier.out_proj.weight     | MISSING    | 
+classifier.out_proj.bias       | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+  budget 1024 tokens
+    saved trunc1024_stage3_lr5e-05_stage1.npz  mean p(machine): machine 0.911 human 0.111
+    saved trunc1024_stage3_lr5e-05_stage2.npz  mean p(machine): machine 0.966 human 0.111
+    saved trunc1024_stage3_lr5e-05_stage3.npz  mean p(machine): machine 0.947 human 0.111
+    saved trunc1024_stage3_lr5e-05_stage4.npz  mean p(machine): machine 0.833 human 0.111
+    saved trunc1024_stage3_lr5e-05_stage5.npz  mean p(machine): machine 0.830 human 0.111
+    saved trunc1024_val_stage3_lr5e-05_stage3.npz  mean p(machine): machine 0.948 human 0.110
+  budget 512 tokens
+    saved trunc512_stage3_lr5e-05_stage1.npz  mean p(machine): machine 0.911 human 0.112
+    saved trunc512_stage3_lr5e-05_stage2.npz  mean p(machine): machine 0.966 human 0.112
+    saved trunc512_stage3_lr5e-05_stage3.npz  mean p(machine): machine 0.947 human 0.112
+    saved trunc512_stage3_lr5e-05_stage4.npz  mean p(machine): machine 0.832 human 0.112
+    saved trunc512_stage3_lr5e-05_stage5.npz  mean p(machine): machine 0.831 human 0.112
+    saved trunc512_val_stage3_lr5e-05_stage3.npz  mean p(machine): machine 0.948 human 0.111
+  budget 256 tokens
+    saved trunc256_stage3_lr5e-05_stage1.npz  mean p(machine): machine 0.907 human 0.115
+    saved trunc256_stage3_lr5e-05_stage2.npz  mean p(machine): machine 0.963 human 0.115
+    saved trunc256_stage3_lr5e-05_stage3.npz  mean p(machine): machine 0.944 human 0.115
+    saved trunc256_stage3_lr5e-05_stage4.npz  mean p(machine): machine 0.829 human 0.115
+    saved trunc256_stage3_lr5e-05_stage5.npz  mean p(machine): machine 0.785 human 0.115
+    saved trunc256_val_stage3_lr5e-05_stage3.npz  mean p(machine): machine 0.945 human 0.114
+  budget 128 tokens
+    saved trunc128_stage3_lr5e-05_stage1.npz  mean p(machine): machine 0.899 human 0.170
+    saved trunc128_stage3_lr5e-05_stage2.npz  mean p(machine): machine 0.941 human 0.170
+    saved trunc128_stage3_lr5e-05_stage3.npz  mean p(machine): machine 0.932 human 0.170
+    saved trunc128_stage3_lr5e-05_stage4.npz  mean p(machine): machine 0.821 human 0.170
+    saved trunc128_stage3_lr5e-05_stage5.npz  mean p(machine): machine 0.730 human 0.170
+    saved trunc128_val_stage3_lr5e-05_stage3.npz  mean p(machine): machine 0.929 human 0.169
+  budget 64 tokens
+    saved trunc64_stage3_lr5e-05_stage1.npz  mean p(machine): machine 0.904 human 0.547
+    saved trunc64_stage3_lr5e-05_stage2.npz  mean p(machine): machine 0.901 human 0.547
+    saved trunc64_stage3_lr5e-05_stage3.npz  mean p(machine): machine 0.923 human 0.547
+    saved trunc64_stage3_lr5e-05_stage4.npz  mean p(machine): machine 0.871 human 0.547
+    saved trunc64_stage3_lr5e-05_stage5.npz  mean p(machine): machine 0.839 human 0.547
+    saved trunc64_val_stage3_lr5e-05_stage3.npz  mean p(machine): machine 0.919 human 0.535
+  budget 32 tokens
+    saved trunc32_stage3_lr5e-05_stage1.npz  mean p(machine): machine 0.893 human 0.829
+    saved trunc32_stage3_lr5e-05_stage2.npz  mean p(machine): machine 0.884 human 0.829
+    saved trunc32_stage3_lr5e-05_stage3.npz  mean p(machine): machine 0.882 human 0.829
+    saved trunc32_stage3_lr5e-05_stage4.npz  mean p(machine): machine 0.903 human 0.829
+    saved trunc32_stage3_lr5e-05_stage5.npz  mean p(machine): machine 0.891 human 0.829
+    saved trunc32_val_stage3_lr5e-05_stage3.npz  mean p(machine): machine 0.866 human 0.829
+
+=== stage4_lr5e-05 ===
+Loading weights:   0%|          | 0/269 [00:00<?, ?it/s]Loading weights: 100%|██████████| 269/269 [00:00<00:00, 41518.59it/s]
+[transformers] [1mLongformerForSequenceClassification LOAD REPORT[0m from: allenai/longformer-base-4096
+Key                            | Status     | 
+-------------------------------+------------+-
+lm_head.bias                   | UNEXPECTED | 
+lm_head.layer_norm.weight      | UNEXPECTED | 
+lm_head.decoder.weight         | UNEXPECTED | 
+lm_head.layer_norm.bias        | UNEXPECTED | 
+lm_head.dense.bias             | UNEXPECTED | 
+longformer.pooler.dense.weight | UNEXPECTED | 
+longformer.pooler.dense.bias   | UNEXPECTED | 
+lm_head.dense.weight           | UNEXPECTED | 
+classifier.dense.weight        | MISSING    | 
+classifier.dense.bias          | MISSING    | 
+classifier.out_proj.weight     | MISSING    | 
+classifier.out_proj.bias       | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+  budget 1024 tokens
+    saved trunc1024_stage4_lr5e-05_stage1.npz  mean p(machine): machine 0.974 human 0.255
+    saved trunc1024_stage4_lr5e-05_stage2.npz  mean p(machine): machine 0.996 human 0.255
+    saved trunc1024_stage4_lr5e-05_stage3.npz  mean p(machine): machine 0.924 human 0.255
+    saved trunc1024_stage4_lr5e-05_stage4.npz  mean p(machine): machine 0.989 human 0.255
+    saved trunc1024_stage4_lr5e-05_stage5.npz  mean p(machine): machine 0.971 human 0.255
+    saved trunc1024_val_stage4_lr5e-05_stage4.npz  mean p(machine): machine 0.987 human 0.255
+  budget 512 tokens
+    saved trunc512_stage4_lr5e-05_stage1.npz  mean p(machine): machine 0.974 human 0.261
+    saved trunc512_stage4_lr5e-05_stage2.npz  mean p(machine): machine 0.996 human 0.261
+    saved trunc512_stage4_lr5e-05_stage3.npz  mean p(machine): machine 0.924 human 0.261
+    saved trunc512_stage4_lr5e-05_stage4.npz  mean p(machine): machine 0.989 human 0.261
+    saved trunc512_stage4_lr5e-05_stage5.npz  mean p(machine): machine 0.969 human 0.261
+    saved trunc512_val_stage4_lr5e-05_stage4.npz  mean p(machine): machine 0.987 human 0.259
+  budget 256 tokens
+    saved trunc256_stage4_lr5e-05_stage1.npz  mean p(machine): machine 0.974 human 0.290
+    saved trunc256_stage4_lr5e-05_stage2.npz  mean p(machine): machine 0.995 human 0.290
+    saved trunc256_stage4_lr5e-05_stage3.npz  mean p(machine): machine 0.923 human 0.290
+    saved trunc256_stage4_lr5e-05_stage4.npz  mean p(machine): machine 0.988 human 0.290
+    saved trunc256_stage4_lr5e-05_stage5.npz  mean p(machine): machine 0.961 human 0.290
+    saved trunc256_val_stage4_lr5e-05_stage4.npz  mean p(machine): machine 0.987 human 0.287
+  budget 128 tokens
+    saved trunc128_stage4_lr5e-05_stage1.npz  mean p(machine): machine 0.972 human 0.407
+    saved trunc128_stage4_lr5e-05_stage2.npz  mean p(machine): machine 0.993 human 0.407
+    saved trunc128_stage4_lr5e-05_stage3.npz  mean p(machine): machine 0.919 human 0.407
+    saved trunc128_stage4_lr5e-05_stage4.npz  mean p(machine): machine 0.987 human 0.407
+    saved trunc128_stage4_lr5e-05_stage5.npz  mean p(machine): machine 0.940 human 0.407
+    saved trunc128_val_stage4_lr5e-05_stage4.npz  mean p(machine): machine 0.985 human 0.403
+  budget 64 tokens
+    saved trunc64_stage4_lr5e-05_stage1.npz  mean p(machine): machine 0.972 human 0.715
+    saved trunc64_stage4_lr5e-05_stage2.npz  mean p(machine): machine 0.992 human 0.715
+    saved trunc64_stage4_lr5e-05_stage3.npz  mean p(machine): machine 0.927 human 0.715
+    saved trunc64_stage4_lr5e-05_stage4.npz  mean p(machine): machine 0.986 human 0.715
+    saved trunc64_stage4_lr5e-05_stage5.npz  mean p(machine): machine 0.961 human 0.715
+    saved trunc64_val_stage4_lr5e-05_stage4.npz  mean p(machine): machine 0.984 human 0.715
+  budget 32 tokens
+    saved trunc32_stage4_lr5e-05_stage1.npz  mean p(machine): machine 0.849 human 0.769
+    saved trunc32_stage4_lr5e-05_stage2.npz  mean p(machine): machine 0.821 human 0.769
+    saved trunc32_stage4_lr5e-05_stage3.npz  mean p(machine): machine 0.816 human 0.769
+    saved trunc32_stage4_lr5e-05_stage4.npz  mean p(machine): machine 0.870 human 0.769
+    saved trunc32_stage4_lr5e-05_stage5.npz  mean p(machine): machine 0.847 human 0.769
+    saved trunc32_val_stage4_lr5e-05_stage4.npz  mean p(machine): machine 0.856 human 0.772
+
+=== stage5_lr3e-05 ===
+Loading weights:   0%|          | 0/269 [00:00<?, ?it/s]Loading weights: 100%|██████████| 269/269 [00:00<00:00, 52663.73it/s]
+[transformers] [1mLongformerForSequenceClassification LOAD REPORT[0m from: allenai/longformer-base-4096
+Key                            | Status     | 
+-------------------------------+------------+-
+lm_head.bias                   | UNEXPECTED | 
+lm_head.layer_norm.weight      | UNEXPECTED | 
+lm_head.decoder.weight         | UNEXPECTED | 
+lm_head.layer_norm.bias        | UNEXPECTED | 
+lm_head.dense.bias             | UNEXPECTED | 
+longformer.pooler.dense.weight | UNEXPECTED | 
+longformer.pooler.dense.bias   | UNEXPECTED | 
+lm_head.dense.weight           | UNEXPECTED | 
+classifier.dense.weight        | MISSING    | 
+classifier.dense.bias          | MISSING    | 
+classifier.out_proj.weight     | MISSING    | 
+classifier.out_proj.bias       | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+  budget 1024 tokens
+    saved trunc1024_stage5_lr3e-05_stage1.npz  mean p(machine): machine 0.979 human 0.325
+    saved trunc1024_stage5_lr3e-05_stage2.npz  mean p(machine): machine 0.992 human 0.325
+    saved trunc1024_stage5_lr3e-05_stage3.npz  mean p(machine): machine 0.936 human 0.325
+    saved trunc1024_stage5_lr3e-05_stage4.npz  mean p(machine): machine 0.987 human 0.325
+    saved trunc1024_stage5_lr3e-05_stage5.npz  mean p(machine): machine 0.991 human 0.325
+    saved trunc1024_val_stage5_lr3e-05_stage5.npz  mean p(machine): machine 0.990 human 0.328
+  budget 512 tokens
+    saved trunc512_stage5_lr3e-05_stage1.npz  mean p(machine): machine 0.979 human 0.329
+    saved trunc512_stage5_lr3e-05_stage2.npz  mean p(machine): machine 0.992 human 0.329
+    saved trunc512_stage5_lr3e-05_stage3.npz  mean p(machine): machine 0.936 human 0.329
+    saved trunc512_stage5_lr3e-05_stage4.npz  mean p(machine): machine 0.987 human 0.329
+    saved trunc512_stage5_lr3e-05_stage5.npz  mean p(machine): machine 0.991 human 0.329
+    saved trunc512_val_stage5_lr3e-05_stage5.npz  mean p(machine): machine 0.990 human 0.330
+  budget 256 tokens
+    saved trunc256_stage5_lr3e-05_stage1.npz  mean p(machine): machine 0.979 human 0.333
+    saved trunc256_stage5_lr3e-05_stage2.npz  mean p(machine): machine 0.992 human 0.333
+    saved trunc256_stage5_lr3e-05_stage3.npz  mean p(machine): machine 0.936 human 0.333
+    saved trunc256_stage5_lr3e-05_stage4.npz  mean p(machine): machine 0.987 human 0.333
+    saved trunc256_stage5_lr3e-05_stage5.npz  mean p(machine): machine 0.988 human 0.333
+    saved trunc256_val_stage5_lr3e-05_stage5.npz  mean p(machine): machine 0.987 human 0.335
+  budget 128 tokens
+    saved trunc128_stage5_lr3e-05_stage1.npz  mean p(machine): machine 0.976 human 0.424
+    saved trunc128_stage5_lr3e-05_stage2.npz  mean p(machine): machine 0.987 human 0.424
+    saved trunc128_stage5_lr3e-05_stage3.npz  mean p(machine): machine 0.932 human 0.424
+    saved trunc128_stage5_lr3e-05_stage4.npz  mean p(machine): machine 0.984 human 0.424
+    saved trunc128_stage5_lr3e-05_stage5.npz  mean p(machine): machine 0.969 human 0.424
+    saved trunc128_val_stage5_lr3e-05_stage5.npz  mean p(machine): machine 0.967 human 0.422
+  budget 64 tokens
+    saved trunc64_stage5_lr3e-05_stage1.npz  mean p(machine): machine 0.972 human 0.700
+    saved trunc64_stage5_lr3e-05_stage2.npz  mean p(machine): machine 0.981 human 0.700
+    saved trunc64_stage5_lr3e-05_stage3.npz  mean p(machine): machine 0.932 human 0.700
+    saved trunc64_stage5_lr3e-05_stage4.npz  mean p(machine): machine 0.980 human 0.700
+    saved trunc64_stage5_lr3e-05_stage5.npz  mean p(machine): machine 0.963 human 0.700
+    saved trunc64_val_stage5_lr3e-05_stage5.npz  mean p(machine): machine 0.963 human 0.698
+  budget 32 tokens
+    saved trunc32_stage5_lr3e-05_stage1.npz  mean p(machine): machine 0.870 human 0.801
+    saved trunc32_stage5_lr3e-05_stage2.npz  mean p(machine): machine 0.844 human 0.801
+    saved trunc32_stage5_lr3e-05_stage3.npz  mean p(machine): machine 0.840 human 0.801
+    saved trunc32_stage5_lr3e-05_stage4.npz  mean p(machine): machine 0.888 human 0.801
+    saved trunc32_stage5_lr3e-05_stage5.npz  mean p(machine): machine 0.869 human 0.801
+    saved trunc32_val_stage5_lr3e-05_stage5.npz  mean p(machine): machine 0.862 human 0.806
+
+=== pooled_lr5e-05 ===
+Loading weights:   0%|          | 0/269 [00:00<?, ?it/s]Loading weights: 100%|██████████| 269/269 [00:00<00:00, 39537.01it/s]
+[transformers] [1mLongformerForSequenceClassification LOAD REPORT[0m from: allenai/longformer-base-4096
+Key                            | Status     | 
+-------------------------------+------------+-
+lm_head.bias                   | UNEXPECTED | 
+lm_head.layer_norm.weight      | UNEXPECTED | 
+lm_head.decoder.weight         | UNEXPECTED | 
+lm_head.layer_norm.bias        | UNEXPECTED | 
+lm_head.dense.bias             | UNEXPECTED | 
+longformer.pooler.dense.weight | UNEXPECTED | 
+longformer.pooler.dense.bias   | UNEXPECTED | 
+lm_head.dense.weight           | UNEXPECTED | 
+classifier.dense.weight        | MISSING    | 
+classifier.dense.bias          | MISSING    | 
+classifier.out_proj.weight     | MISSING    | 
+classifier.out_proj.bias       | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+  budget 1024 tokens
+    saved trunc1024_pooled_lr5e-05_stage1.npz  mean p(machine): machine 0.988 human 0.418
+    saved trunc1024_pooled_lr5e-05_stage2.npz  mean p(machine): machine 0.994 human 0.418
+    saved trunc1024_pooled_lr5e-05_stage3.npz  mean p(machine): machine 0.970 human 0.418
+    saved trunc1024_pooled_lr5e-05_stage4.npz  mean p(machine): machine 0.990 human 0.418
+    saved trunc1024_pooled_lr5e-05_stage5.npz  mean p(machine): machine 0.989 human 0.418
+    saved trunc1024_val_pooled_lr5e-05_stage1.npz  mean p(machine): machine 0.988 human 0.417
+    saved trunc1024_val_pooled_lr5e-05_stage2.npz  mean p(machine): machine 0.995 human 0.417
+    saved trunc1024_val_pooled_lr5e-05_stage3.npz  mean p(machine): machine 0.972 human 0.417
+    saved trunc1024_val_pooled_lr5e-05_stage4.npz  mean p(machine): machine 0.989 human 0.417
+    saved trunc1024_val_pooled_lr5e-05_stage5.npz  mean p(machine): machine 0.990 human 0.417
+  budget 512 tokens
+    saved trunc512_pooled_lr5e-05_stage1.npz  mean p(machine): machine 0.988 human 0.423
+    saved trunc512_pooled_lr5e-05_stage2.npz  mean p(machine): machine 0.994 human 0.423
+    saved trunc512_pooled_lr5e-05_stage3.npz  mean p(machine): machine 0.969 human 0.423
+    saved trunc512_pooled_lr5e-05_stage4.npz  mean p(machine): machine 0.990 human 0.423
+    saved trunc512_pooled_lr5e-05_stage5.npz  mean p(machine): machine 0.989 human 0.423
+    saved trunc512_val_pooled_lr5e-05_stage1.npz  mean p(machine): machine 0.988 human 0.421
+    saved trunc512_val_pooled_lr5e-05_stage2.npz  mean p(machine): machine 0.995 human 0.421
+    saved trunc512_val_pooled_lr5e-05_stage3.npz  mean p(machine): machine 0.972 human 0.421
+    saved trunc512_val_pooled_lr5e-05_stage4.npz  mean p(machine): machine 0.989 human 0.421
+    saved trunc512_val_pooled_lr5e-05_stage5.npz  mean p(machine): machine 0.989 human 0.421
+  budget 256 tokens
+    saved trunc256_pooled_lr5e-05_stage1.npz  mean p(machine): machine 0.988 human 0.457
+    saved trunc256_pooled_lr5e-05_stage2.npz  mean p(machine): machine 0.994 human 0.457
+    saved trunc256_pooled_lr5e-05_stage3.npz  mean p(machine): machine 0.969 human 0.457
+    saved trunc256_pooled_lr5e-05_stage4.npz  mean p(machine): machine 0.990 human 0.457
+    saved trunc256_pooled_lr5e-05_stage5.npz  mean p(machine): machine 0.987 human 0.457
+    saved trunc256_val_pooled_lr5e-05_stage1.npz  mean p(machine): machine 0.988 human 0.455
+    saved trunc256_val_pooled_lr5e-05_stage2.npz  mean p(machine): machine 0.995 human 0.455
+    saved trunc256_val_pooled_lr5e-05_stage3.npz  mean p(machine): machine 0.972 human 0.455
+    saved trunc256_val_pooled_lr5e-05_stage4.npz  mean p(machine): machine 0.989 human 0.455
+    saved trunc256_val_pooled_lr5e-05_stage5.npz  mean p(machine): machine 0.986 human 0.455
+  budget 128 tokens
+    saved trunc128_pooled_lr5e-05_stage1.npz  mean p(machine): machine 0.988 human 0.655
+    saved trunc128_pooled_lr5e-05_stage2.npz  mean p(machine): machine 0.993 human 0.655
+    saved trunc128_pooled_lr5e-05_stage3.npz  mean p(machine): machine 0.969 human 0.655
+    saved trunc128_pooled_lr5e-05_stage4.npz  mean p(machine): machine 0.990 human 0.655
+    saved trunc128_pooled_lr5e-05_stage5.npz  mean p(machine): machine 0.983 human 0.655
+    saved trunc128_val_pooled_lr5e-05_stage1.npz  mean p(machine): machine 0.988 human 0.654
+    saved trunc128_val_pooled_lr5e-05_stage2.npz  mean p(machine): machine 0.995 human 0.654
+    saved trunc128_val_pooled_lr5e-05_stage3.npz  mean p(machine): machine 0.971 human 0.654
+    saved trunc128_val_pooled_lr5e-05_stage4.npz  mean p(machine): machine 0.989 human 0.654
+    saved trunc128_val_pooled_lr5e-05_stage5.npz  mean p(machine): machine 0.982 human 0.654
+  budget 64 tokens
+    saved trunc64_pooled_lr5e-05_stage1.npz  mean p(machine): machine 0.988 human 0.869
+    saved trunc64_pooled_lr5e-05_stage2.npz  mean p(machine): machine 0.992 human 0.869
+    saved trunc64_pooled_lr5e-05_stage3.npz  mean p(machine): machine 0.972 human 0.869
+    saved trunc64_pooled_lr5e-05_stage4.npz  mean p(machine): machine 0.990 human 0.869
+    saved trunc64_pooled_lr5e-05_stage5.npz  mean p(machine): machine 0.986 human 0.869
+    saved trunc64_val_pooled_lr5e-05_stage1.npz  mean p(machine): machine 0.988 human 0.865
+    saved trunc64_val_pooled_lr5e-05_stage2.npz  mean p(machine): machine 0.992 human 0.865
+    saved trunc64_val_pooled_lr5e-05_stage3.npz  mean p(machine): machine 0.973 human 0.865
+    saved trunc64_val_pooled_lr5e-05_stage4.npz  mean p(machine): machine 0.989 human 0.865
+    saved trunc64_val_pooled_lr5e-05_stage5.npz  mean p(machine): machine 0.986 human 0.865
+  budget 32 tokens
+    saved trunc32_pooled_lr5e-05_stage1.npz  mean p(machine): machine 0.947 human 0.916
+    saved trunc32_pooled_lr5e-05_stage2.npz  mean p(machine): machine 0.933 human 0.916
+    saved trunc32_pooled_lr5e-05_stage3.npz  mean p(machine): machine 0.933 human 0.916
+    saved trunc32_pooled_lr5e-05_stage4.npz  mean p(machine): machine 0.953 human 0.916
+    saved trunc32_pooled_lr5e-05_stage5.npz  mean p(machine): machine 0.946 human 0.916
+    saved trunc32_val_pooled_lr5e-05_stage1.npz  mean p(machine): machine 0.947 human 0.915
+    saved trunc32_val_pooled_lr5e-05_stage2.npz  mean p(machine): machine 0.933 human 0.915
+    saved trunc32_val_pooled_lr5e-05_stage3.npz  mean p(machine): machine 0.932 human 0.915
+    saved trunc32_val_pooled_lr5e-05_stage4.npz  mean p(machine): machine 0.953 human 0.915
+    saved trunc32_val_pooled_lr5e-05_stage5.npz  mean p(machine): machine 0.946 human 0.915
+
+truncation scoring complete
