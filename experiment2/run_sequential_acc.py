@@ -111,3 +111,78 @@ def main():
             prev = json.load(f)
         R = prev["R"]
         R_full = prev["R_full"]
+        chosen_lrs = prev["chosen_lr_per_stage"]
+        selection_log = prev["selection_log"]
+        branches = prev["branches"]
+        branches_full = prev["branches_full"]
+        done_stage = len(R) - 1
+        print(f"resuming: {done_stage} completed stage(s) found in {RESULTS_PATH}")
+
+    if done_stage == 0:
+        print("evaluating untrained baseline (M0)")
+        row0, full0 = evaluate_all_stages(new_model(), "M0")
+        R, R_full = [row0], [full0]
+        save(R, R_full, chosen_lrs, selection_log, branches, branches_full, "in progress")
+
+    model = new_model()
+    if done_stage > 0:
+        lr = chosen_lrs[f"stage{done_stage}"]
+        ckpt = torch.load(
+            os.path.join(CKPT_DIR, f"seqacc_stage{done_stage}_lr{lr}.pt"),
+            map_location="cpu",
+        )
+        model.load_state_dict(ckpt)
+        print(f"loaded checkpoint seqacc_stage{done_stage}_lr{lr}.pt")
+
+    for stage in STAGES:
+        if stage <= done_stage:
+            continue
+        print(f"\n=== stage {stage} ===")
+        start_weights = copy.deepcopy(model.state_dict())
+        vdata = dl.stage_eval(stage, "validation")
+        vlabels = vdata["label"].to_numpy()
+
+        best_sel = -1
+        best_model = None
+        best_lr = None
+
+        for lr in LEARNING_RATES:
+            print(f"\n  training lr {lr}")
+            branch = new_model()
+            branch.load_state_dict(start_weights)
+            branch = train_stage(branch, stage, lr)
+
+            r = evaluate(branch, vdata, return_probs=True)
+            t = fit_threshold(r["machine_probs"], vlabels)
+            sel = accuracy_at(r["machine_probs"], vlabels, t)
+            selection_log[f"stage{stage}_lr{lr}"] = {
+                "val_accuracy": sel, "threshold": t,
+            }
+            print(f"  lr {lr}: threshold {t:.3f}  val accuracy {sel:.4f}")
+
+            print(f"  evaluating lr {lr} on all test stages")
+            tag = f"stage{stage}_lr{lr}"
+            branches[tag], branches_full[tag] = evaluate_all_stages(branch, tag)
+
+            if sel > best_sel:
+                best_sel = sel
+                best_model = branch
+                best_lr = lr
+
+        print(f"\n  stage {stage} winner: lr {best_lr} (val accuracy {best_sel:.4f})")
+        model = best_model
+        chosen_lrs[f"stage{stage}"] = best_lr
+        save_checkpoint(model, stage, best_lr)
+        R.append(branches[f"stage{stage}_lr{best_lr}"])
+        R_full.append(branches_full[f"stage{stage}_lr{best_lr}"])
+        save(R, R_full, chosen_lrs, selection_log, branches, branches_full, "in progress")
+
+    save(R, R_full, chosen_lrs, selection_log, branches, branches_full, "complete")
+
+    A = np.array(R)
+    print(f"\nchosen learning rates: {chosen_lrs}")
+    print(f"ACC {acc(A):.4f}   BWT {bwt(A):.4f}   FWT {fwt(A):.4f}")
+
+
+if __name__ == "__main__":
+    main()
