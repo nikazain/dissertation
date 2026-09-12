@@ -1,0 +1,60 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+fresh humans: 5616 from test split, positions beyond the fixed sample
+
+=== M5 (stage5_lr3e-05) ===
+Loading weights:   0%|          | 0/269 [00:00<?, ?it/s]Loading weights: 100%|██████████| 269/269 [00:00<00:00, 41631.96it/s]
+[transformers] [1mLongformerForSequenceClassification LOAD REPORT[0m from: allenai/longformer-base-4096
+Key                            | Status     | 
+-------------------------------+------------+-
+lm_head.bias                   | UNEXPECTED | 
+lm_head.dense.weight           | UNEXPECTED | 
+lm_head.layer_norm.bias        | UNEXPECTED | 
+longformer.pooler.dense.bias   | UNEXPECTED | 
+longformer.pooler.dense.weight | UNEXPECTED | 
+lm_head.decoder.weight         | UNEXPECTED | 
+lm_head.layer_norm.weight      | UNEXPECTED | 
+lm_head.dense.bias             | UNEXPECTED | 
+classifier.out_proj.bias       | MISSING    | 
+classifier.dense.weight        | MISSING    | 
+classifier.dense.bias          | MISSING    | 
+classifier.out_proj.weight     | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+stage   acc fixed  acc fresh   auroc fixed  auroc fresh   hum_rec fixed  hum_rec fresh
+  S1     0.915      0.917       0.969        0.970        0.925          0.929
+  S2     0.940      0.942       0.984        0.985        0.925          0.929
+  S3     0.839      0.841       0.930        0.932        0.925          0.929
+  S4     0.929      0.931       0.978        0.979        0.925          0.929
+  S5     0.936      0.938       0.981        0.982        0.925          0.929
+
+=== pooled (pooled_lr5e-05) ===
+Loading weights:   0%|          | 0/269 [00:00<?, ?it/s]Loading weights: 100%|██████████| 269/269 [00:00<00:00, 48644.81it/s]
+[transformers] [1mLongformerForSequenceClassification LOAD REPORT[0m from: allenai/longformer-base-4096
+Key                            | Status     | 
+-------------------------------+------------+-
+lm_head.bias                   | UNEXPECTED | 
+lm_head.dense.weight           | UNEXPECTED | 
+lm_head.layer_norm.bias        | UNEXPECTED | 
+longformer.pooler.dense.bias   | UNEXPECTED | 
+longformer.pooler.dense.weight | UNEXPECTED | 
+lm_head.decoder.weight         | UNEXPECTED | 
+lm_head.layer_norm.weight      | UNEXPECTED | 
+lm_head.dense.bias             | UNEXPECTED | 
+classifier.out_proj.bias       | MISSING    | 
+classifier.dense.weight        | MISSING    | 
+classifier.dense.bias          | MISSING    | 
+classifier.out_proj.weight     | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+stage   acc fixed  acc fresh   auroc fixed  auroc fresh   hum_rec fixed  hum_rec fresh
+  S1     0.921      0.923       0.976        0.978        0.934          0.939
+  S2     0.947      0.949       0.988        0.989        0.934          0.939
+  S3     0.869      0.871       0.951        0.954        0.934          0.939
+  S4     0.931      0.933       0.981        0.982        0.934          0.939
+  S5     0.936      0.938       0.982        0.983        0.934          0.939
+
+saved results_human_luck.json
