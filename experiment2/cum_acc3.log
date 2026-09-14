@@ -1,0 +1,243 @@
+nohup: ignoring input
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+resuming: 3 completed stage(s) found in results_cumulative_acc.json
+Loading weights:   0%|          | 0/269 [00:00<?, ?it/s]Loading weights: 100%|██████████| 269/269 [00:00<00:00, 20623.83it/s]
+[transformers] [1mLongformerForSequenceClassification LOAD REPORT[0m from: allenai/longformer-base-4096
+Key                            | Status     | 
+-------------------------------+------------+-
+lm_head.bias                   | UNEXPECTED | 
+lm_head.layer_norm.bias        | UNEXPECTED | 
+lm_head.layer_norm.weight      | UNEXPECTED | 
+longformer.pooler.dense.bias   | UNEXPECTED | 
+lm_head.decoder.weight         | UNEXPECTED | 
+lm_head.dense.bias             | UNEXPECTED | 
+lm_head.dense.weight           | UNEXPECTED | 
+longformer.pooler.dense.weight | UNEXPECTED | 
+classifier.dense.bias          | MISSING    | 
+classifier.out_proj.bias       | MISSING    | 
+classifier.out_proj.weight     | MISSING    | 
+classifier.dense.weight        | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+loaded checkpoint cumacc_stage3_lr3e-05.pt
+
+=== stage 4 ===
+
+  training lr 1e-05
+Loading weights:   0%|          | 0/269 [00:00<?, ?it/s]Loading weights: 100%|██████████| 269/269 [00:00<00:00, 24204.48it/s]
+[transformers] [1mLongformerForSequenceClassification LOAD REPORT[0m from: allenai/longformer-base-4096
+Key                            | Status     | 
+-------------------------------+------------+-
+lm_head.bias                   | UNEXPECTED | 
+lm_head.layer_norm.bias        | UNEXPECTED | 
+lm_head.layer_norm.weight      | UNEXPECTED | 
+longformer.pooler.dense.bias   | UNEXPECTED | 
+lm_head.decoder.weight         | UNEXPECTED | 
+lm_head.dense.bias             | UNEXPECTED | 
+lm_head.dense.weight           | UNEXPECTED | 
+longformer.pooler.dense.weight | UNEXPECTED | 
+classifier.dense.bias          | MISSING    | 
+classifier.out_proj.bias       | MISSING    | 
+classifier.out_proj.weight     | MISSING    | 
+classifier.dense.weight        | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[transformers] Initializing global attention on CLS token...
+stage 4 lr 1e-05 epoch 1: val auroc 0.9795
+stage 4 lr 1e-05 epoch 2: val auroc 0.9502
+stage 4 lr 1e-05 epoch 3: val auroc 0.9637
+stage 4 lr 1e-05 epoch 4: val auroc 0.9369
+stage 4 lr 1e-05 epoch 5: val auroc 0.9391
+  lr 1e-05: threshold 0.999  per-stage acc {'stage1': 0.9505679236710586, 'stage2': 0.9544758339006126, 'stage3': 0.9198038726834539, 'stage4': 0.9443925718435522}  mean 0.9423
+  evaluating lr 1e-05 on all test stages
+    test stage 1: auroc 0.9829  human_rec 0.7842  machine_rec 0.9890
+    test stage 2: auroc 0.9887  human_rec 0.7842  machine_rec 0.9914
+    test stage 3: auroc 0.9707  human_rec 0.7842  machine_rec 0.9719
+    test stage 4: auroc 0.9818  human_rec 0.7842  machine_rec 0.9871
+    test stage 5: auroc 0.9762  human_rec 0.7842  machine_rec 0.9833
+
+  training lr 3e-05
+Loading weights:   0%|          | 0/269 [00:00<?, ?it/s]Loading weights: 100%|██████████| 269/269 [00:00<00:00, 24746.51it/s]
+[transformers] [1mLongformerForSequenceClassification LOAD REPORT[0m from: allenai/longformer-base-4096
+Key                            | Status     | 
+-------------------------------+------------+-
+lm_head.bias                   | UNEXPECTED | 
+lm_head.layer_norm.bias        | UNEXPECTED | 
+lm_head.layer_norm.weight      | UNEXPECTED | 
+longformer.pooler.dense.bias   | UNEXPECTED | 
+lm_head.decoder.weight         | UNEXPECTED | 
+lm_head.dense.bias             | UNEXPECTED | 
+lm_head.dense.weight           | UNEXPECTED | 
+longformer.pooler.dense.weight | UNEXPECTED | 
+classifier.dense.bias          | MISSING    | 
+classifier.out_proj.bias       | MISSING    | 
+classifier.out_proj.weight     | MISSING    | 
+classifier.dense.weight        | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+stage 4 lr 3e-05 epoch 1: val auroc 0.9814
+stage 4 lr 3e-05 epoch 2: val auroc 0.9569
+stage 4 lr 3e-05 epoch 3: val auroc 0.9872
+stage 4 lr 3e-05 epoch 4: val auroc 0.9875
+stage 4 lr 3e-05 epoch 5: val auroc 0.9742
+  lr 3e-05: threshold 0.999  per-stage acc {'stage1': 0.9336665152203544, 'stage2': 0.9417971409121851, 'stage3': 0.8984459403307571, 'stage4': 0.9306982052080092}  mean 0.9262
+  evaluating lr 3e-05 on all test stages
+    test stage 1: auroc 0.9867  human_rec 0.7899  machine_rec 0.9875
+    test stage 2: auroc 0.9905  human_rec 0.7899  machine_rec 0.9909
+    test stage 3: auroc 0.9605  human_rec 0.7899  machine_rec 0.9511
+    test stage 4: auroc 0.9893  human_rec 0.7899  machine_rec 0.9903
+    test stage 5: auroc 0.9800  human_rec 0.7899  machine_rec 0.9769
+
+  training lr 5e-05
+Loading weights:   0%|          | 0/269 [00:00<?, ?it/s]Loading weights: 100%|██████████| 269/269 [00:00<00:00, 25038.68it/s]
+[transformers] [1mLongformerForSequenceClassification LOAD REPORT[0m from: allenai/longformer-base-4096
+Key                            | Status     | 
+-------------------------------+------------+-
+lm_head.bias                   | UNEXPECTED | 
+lm_head.layer_norm.bias        | UNEXPECTED | 
+lm_head.layer_norm.weight      | UNEXPECTED | 
+longformer.pooler.dense.bias   | UNEXPECTED | 
+lm_head.decoder.weight         | UNEXPECTED | 
+lm_head.dense.bias             | UNEXPECTED | 
+lm_head.dense.weight           | UNEXPECTED | 
+longformer.pooler.dense.weight | UNEXPECTED | 
+classifier.dense.bias          | MISSING    | 
+classifier.out_proj.bias       | MISSING    | 
+classifier.out_proj.weight     | MISSING    | 
+classifier.dense.weight        | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+stage 4 lr 5e-05 epoch 1: val auroc 0.9801
+stage 4 lr 5e-05 epoch 2: val auroc 0.9867
+stage 4 lr 5e-05 epoch 3: val auroc 0.9872
+stage 4 lr 5e-05 epoch 4: val auroc 0.9732
+stage 4 lr 5e-05 epoch 5: val auroc 0.9889
+  lr 5e-05: threshold 0.999  per-stage acc {'stage1': 0.9423898228078146, 'stage2': 0.9567733151803949, 'stage3': 0.8963683204520901, 'stage4': 0.9482311443095757}  mean 0.9359
+  evaluating lr 5e-05 on all test stages
+    test stage 1: auroc 0.9839  human_rec 0.8606  machine_rec 0.9781
+    test stage 2: auroc 0.9919  human_rec 0.8606  machine_rec 0.9890
+    test stage 3: auroc 0.9553  human_rec 0.8606  machine_rec 0.9172
+    test stage 4: auroc 0.9902  human_rec 0.8606  machine_rec 0.9866
+    test stage 5: auroc 0.9704  human_rec 0.8606  machine_rec 0.9461
+
+  stage 4 winner: lr 1e-05 (mean val accuracy 0.9423)
+  saved results_cumulative_acc.json (5 rows)
+
+=== stage 5 ===
+
+  training lr 1e-05
+Loading weights:   0%|          | 0/269 [00:00<?, ?it/s]Loading weights: 100%|██████████| 269/269 [00:00<00:00, 21687.86it/s]
+[transformers] [1mLongformerForSequenceClassification LOAD REPORT[0m from: allenai/longformer-base-4096
+Key                            | Status     | 
+-------------------------------+------------+-
+lm_head.bias                   | UNEXPECTED | 
+lm_head.layer_norm.bias        | UNEXPECTED | 
+lm_head.layer_norm.weight      | UNEXPECTED | 
+longformer.pooler.dense.bias   | UNEXPECTED | 
+lm_head.decoder.weight         | UNEXPECTED | 
+lm_head.dense.bias             | UNEXPECTED | 
+lm_head.dense.weight           | UNEXPECTED | 
+longformer.pooler.dense.weight | UNEXPECTED | 
+classifier.dense.bias          | MISSING    | 
+classifier.out_proj.bias       | MISSING    | 
+classifier.out_proj.weight     | MISSING    | 
+classifier.dense.weight        | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+stage 5 lr 1e-05 epoch 1: val auroc 0.9871
+stage 5 lr 1e-05 epoch 2: val auroc 0.9181
+stage 5 lr 1e-05 epoch 3: val auroc 0.9163
+stage 5 lr 1e-05 epoch 4: val auroc 0.9306
+stage 5 lr 1e-05 epoch 5: val auroc 0.9197
+  lr 1e-05: threshold 0.999  per-stage acc {'stage1': 0.9226715129486597, 'stage2': 0.9202688904016337, 'stage3': 0.8951217485248899, 'stage4': 0.9077705156136529, 'stage5': 0.9297517086253136}  mean 0.9151
+  evaluating lr 1e-05 on all test stages
+    test stage 1: auroc 0.9824  human_rec 0.6624  machine_rec 0.9893
+    test stage 2: auroc 0.9748  human_rec 0.6624  machine_rec 0.9866
+    test stage 3: auroc 0.9598  human_rec 0.6624  machine_rec 0.9721
+    test stage 4: auroc 0.9760  human_rec 0.6624  machine_rec 0.9866
+    test stage 5: auroc 0.9873  human_rec 0.6624  machine_rec 0.9941
+
+  training lr 3e-05
+Loading weights:   0%|          | 0/269 [00:00<?, ?it/s]Loading weights: 100%|██████████| 269/269 [00:00<00:00, 21323.48it/s]
+[transformers] [1mLongformerForSequenceClassification LOAD REPORT[0m from: allenai/longformer-base-4096
+Key                            | Status     | 
+-------------------------------+------------+-
+lm_head.bias                   | UNEXPECTED | 
+lm_head.layer_norm.bias        | UNEXPECTED | 
+lm_head.layer_norm.weight      | UNEXPECTED | 
+longformer.pooler.dense.bias   | UNEXPECTED | 
+lm_head.decoder.weight         | UNEXPECTED | 
+lm_head.dense.bias             | UNEXPECTED | 
+lm_head.dense.weight           | UNEXPECTED | 
+longformer.pooler.dense.weight | UNEXPECTED | 
+classifier.dense.bias          | MISSING    | 
+classifier.out_proj.bias       | MISSING    | 
+classifier.out_proj.weight     | MISSING    | 
+classifier.dense.weight        | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+stage 5 lr 3e-05 epoch 1: val auroc 0.9803
+stage 5 lr 3e-05 epoch 2: val auroc 0.9913
+stage 5 lr 3e-05 epoch 3: val auroc 0.9509
+stage 5 lr 3e-05 epoch 4: val auroc 0.9661
+stage 5 lr 3e-05 epoch 5: val auroc 0.9453
+  lr 3e-05: threshold 0.997  per-stage acc {'stage1': 0.9353021353930032, 'stage2': 0.9229918311776719, 'stage3': 0.8778359511343804, 'stage4': 0.9203236850295674, 'stage5': 0.9510338264555758}  mean 0.9215
+  evaluating lr 3e-05 on all test stages
+    test stage 1: auroc 0.9797  human_rec 0.7418  machine_rec 0.9836
+    test stage 2: auroc 0.9698  human_rec 0.7418  machine_rec 0.9728
+    test stage 3: auroc 0.9503  human_rec 0.7418  machine_rec 0.9494
+    test stage 4: auroc 0.9726  human_rec 0.7418  machine_rec 0.9752
+    test stage 5: auroc 0.9908  human_rec 0.7418  machine_rec 0.9931
+
+  training lr 5e-05
+Loading weights:   0%|          | 0/269 [00:00<?, ?it/s]Loading weights: 100%|██████████| 269/269 [00:00<00:00, 24753.03it/s]
+[transformers] [1mLongformerForSequenceClassification LOAD REPORT[0m from: allenai/longformer-base-4096
+Key                            | Status     | 
+-------------------------------+------------+-
+lm_head.bias                   | UNEXPECTED | 
+lm_head.layer_norm.bias        | UNEXPECTED | 
+lm_head.layer_norm.weight      | UNEXPECTED | 
+longformer.pooler.dense.bias   | UNEXPECTED | 
+lm_head.decoder.weight         | UNEXPECTED | 
+lm_head.dense.bias             | UNEXPECTED | 
+lm_head.dense.weight           | UNEXPECTED | 
+longformer.pooler.dense.weight | UNEXPECTED | 
+classifier.dense.bias          | MISSING    | 
+classifier.out_proj.bias       | MISSING    | 
+classifier.out_proj.weight     | MISSING    | 
+classifier.dense.weight        | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+stage 5 lr 5e-05 epoch 1: val auroc 0.9780
+stage 5 lr 5e-05 epoch 2: val auroc 0.9628
+stage 5 lr 5e-05 epoch 3: val auroc 0.9700
+stage 5 lr 5e-05 epoch 4: val auroc 0.9821
+stage 5 lr 5e-05 epoch 5: val auroc 0.9610
+  lr 5e-05: threshold 0.997  per-stage acc {'stage1': 0.8722398909586552, 'stage2': 0.8406228727025187, 'stage3': 0.8243995678550652, 'stage4': 0.8654424732856105, 'stage5': 0.9249069988753352}  mean 0.8655
+  evaluating lr 5e-05 on all test stages
+    test stage 1: auroc 0.9368  human_rec 0.7194  machine_rec 0.9457
+    test stage 2: auroc 0.9070  human_rec 0.7194  machine_rec 0.9055
+    test stage 3: auroc 0.9032  human_rec 0.7194  machine_rec 0.8979
+    test stage 4: auroc 0.9346  human_rec 0.7194  machine_rec 0.9336
+    test stage 5: auroc 0.9834  human_rec 0.7194  machine_rec 0.9921
+
+  stage 5 winner: lr 3e-05 (mean val accuracy 0.9215)
+  saved results_cumulative_acc.json (6 rows)
+  saved results_cumulative_acc.json (6 rows)
+
+chosen learning rates: {'stage1': 5e-05, 'stage2': 1e-05, 'stage3': 3e-05, 'stage4': 1e-05, 'stage5': 3e-05}
+ACC 0.9726   BWT -0.0189   FWT 0.5034
