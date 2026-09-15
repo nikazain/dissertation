@@ -23,5 +23,4 @@ GENERATOR_STAGE = {
 }
 
 STAGES = (1, 2, 3, 4, 5)
-HUMAN_SIZES = {"train": 45151, "validation": 5599, "test": 5616} # fixed human sizes per split, so the same human rows are used at every stage
-# sizes are round mean of per stage machine counts, so every set stays close to balanced
+HUMAN_SIZES = {"train": 45151, "validation": 5599, "test": 5616} 

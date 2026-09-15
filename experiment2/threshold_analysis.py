@@ -1,40 +1,14 @@
-"""
-Experiment 3: re-grade every saved model with real decision thresholds.
-
-Metric: ACCURACY, per Lampos (meeting 7): next to AUROC, the comparable
-metric for this binary task is accuracy. Thresholds are fitted on
-VALIDATION probabilities by maximising accuracy, then applied to TEST
-probabilities. Machine/human recall are kept as secondary diagnostics.
-
-Three regimes, all evaluated on the untouched TEST sets:
-  fixed      threshold 0.5
-  deployed   one threshold per model, fitted on the validation set of the
-             stage it was just trained on (what a practitioner would have)
-  refit      threshold re-fitted per (model, test stage) on that stage's
-             validation set (the free repair)
-
-Inputs (all already produced):
-  ../experiment2/results.json, results_pooled.json
-  ../experiment2/probs/{tag}_stage{j}.npz          test probabilities
-  ../experiment2/probs/val_{tag}_stage{j}.npz      validation probabilities
-Output: results_thresholds.json + printed matrices.
-Run from inside experiment3/:  python threshold_analysis.py
-"""
-
 import json
 import os
-
 import numpy as np
 
 E2 = os.path.join("..", "experiment2")
 PROBS = os.path.join(E2, "probs")
 GRID = np.arange(0.001, 1.0, 0.001)
 
-
 def load(path):
     d = np.load(path)
     return d["probs"], d["labels"]
-
 
 def grade(probs, labels, t):
     pred_machine = probs > t
@@ -46,13 +20,10 @@ def grade(probs, labels, t):
         "threshold": float(t),
     }
 
-
 def fit_threshold(probs, labels):
-    """Threshold maximising ACCURACY on the given (validation) set."""
     pred = probs[None, :] > GRID[:, None]
     correct = np.where(labels[None, :] == 0, pred, ~pred)
     return GRID[int(np.argmax(correct.mean(axis=1)))]
-
 
 def main():
     with open(os.path.join(E2, "results.json")) as f:
@@ -102,7 +73,6 @@ def main():
             print(row)
 
     print("\nsaved results_thresholds.json")
-
 
 if __name__ == "__main__":
     main()

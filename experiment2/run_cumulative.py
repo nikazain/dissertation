@@ -1,27 +1,8 @@
-"""
-Repair B: identical to run_sequential.py except the selection criterion.
-The winning branch at each stage is chosen by the MEAN validation AUROC over
-all stages seen so far (1..current), not the current stage alone. Lampos's
-framing: cumulative validation acts as a regularizer on model selection.
-
-Everything else is unchanged: same seed, same data, same learning-rate grid,
-same training, same test evaluation of every branch. Stage 1 is by definition
-identical in both criteria, so it doubles as an approximate reproduction of
-the original run's stage 1.
-
-Outputs:
-    results_cumulative.json
-    probs/cum_{tag}_stage{j}.npz
-    checkpoints/cum_stage{s}_lr{lr}.pt
-"""
-
 import copy
 import json
 import os
-
 import numpy as np
 import torch
-
 import data_loading as dl
 from config import SEED, STAGES
 from metrics import acc, bwt, evaluate, fwt
@@ -37,9 +18,7 @@ RESULTS_PATH = "results_cumulative.json"
 PROBS_DIR = "probs"
 CKPT_DIR = "checkpoints"
 
-
 def evaluate_all_stages(model, tag):
-    """Score `model` on every stage's test set, saving per-row probabilities."""
     row, full_row = [], []
     for stage in STAGES:
         data = dl.stage_eval(stage, "test")
@@ -58,14 +37,12 @@ def evaluate_all_stages(model, tag):
               f"  machine_rec {result['machine_rec']:.4f}")
     return row, full_row
 
-
 def save_checkpoint(model, stage, lr):
     sd = {
         k: (v.half() if v.is_floating_point() else v)
         for k, v in model.state_dict().items()
     }
     torch.save(sd, os.path.join(CKPT_DIR, f"cum_stage{stage}_lr{lr}.pt"))
-
 
 def save(R, R_full, chosen_lrs, selection_log, branches, branches_full, note):
     out = {
@@ -87,7 +64,6 @@ def save(R, R_full, chosen_lrs, selection_log, branches, branches_full, note):
     with open(RESULTS_PATH, "w") as f:
         json.dump(out, f, indent=2)
     print(f"  saved {RESULTS_PATH} ({len(R)} rows)")
-
 
 def main():
     seed_everything(SEED)
@@ -176,7 +152,6 @@ def main():
     A = np.array(R)
     print(f"\nchosen learning rates: {chosen_lrs}")
     print(f"ACC {acc(A):.4f}   BWT {bwt(A):.4f}   FWT {fwt(A):.4f}")
-
 
 if __name__ == "__main__":
     main()

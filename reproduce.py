@@ -7,27 +7,20 @@ from sklearn.metrics import recall_score, roc_auc_score, balanced_accuracy_score
 device = "mps" if torch.backends.mps.is_available() else "cpu"
 print("running on:", device)
 
-# Need to remove the OOD test sets, whcih are 4 domains. So we only keep. a row if it contains the name of the 10 original domains
 test = load_dataset("yaful/MAGE")["test"].to_pandas()
 mage_domains = ["cmv", "eli5", "tldr", "xsum", "wp",
                 "roct", "hswag", "yelp", "squad", "sci_gen"]
 starts = tuple(d + "_" for d in mage_domains)
-
 part1 = test[test["src"].str.startswith(starts)]
-
-# small and balanced sample
 sample = part1.groupby("label").sample(n=500, random_state=42)
 texts = sample["text"].tolist()
 labels = sample["label"].tolist()
-
-# loading the longformer
 model_name = "yaful/MAGE"
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 model = AutoModelForSequenceClassification.from_pretrained(model_name).to(device)
 model.eval()
 print("model's label mapping:", model.config.id2label)
 
-# running the model over sample
 prob_machine = []
 with torch.no_grad():
     for i in range(0, len(texts), 16):
@@ -39,9 +32,7 @@ with torch.no_grad():
         prob_machine.extend(p[:, 0].cpu().tolist())
         print(f"{i+len(batch)}/{len(texts)}", end="\r")
 
-# computing paper's metrix
 pred = [0 if p >= 0.5 else 1 for p in prob_machine]
-
 human_rec = recall_score(labels, pred, pos_label=1)
 machine_rec = recall_score(labels, pred, pos_label=0)
 avg_rec = balanced_accuracy_score(labels, pred)

@@ -1,22 +1,8 @@
-"""
-Greedy rerun with ACCURACY selection: identical to the original sequential
-run except the winner at each stage is chosen by decision accuracy on the
-CURRENT stage's validation set, at a threshold fitted there by maximising
-accuracy. Resumable.
-
-Outputs:
-    results_sequential_acc.json
-    probs/seqacc_{tag}_stage{j}.npz
-    checkpoints/seqacc_stage{s}_lr{lr}.pt
-"""
-
 import copy
 import json
 import os
-
 import numpy as np
 import torch
-
 import data_loading as dl
 from config import SEED, STAGES
 from metrics import acc, bwt, evaluate, fwt
@@ -33,17 +19,14 @@ PROBS_DIR = "probs"
 CKPT_DIR = "checkpoints"
 GRID = np.arange(0.001, 1.0, 0.001)
 
-
 def fit_threshold(probs, labels):
     pred = probs[None, :] > GRID[:, None]
     correct = np.where(labels[None, :] == 0, pred, ~pred)
     return float(GRID[int(np.argmax(correct.mean(axis=1)))])
 
-
 def accuracy_at(probs, labels, t):
     pred = probs > t
     return float(np.where(labels == 0, pred, ~pred).mean())
-
 
 def evaluate_all_stages(model, tag):
     row, full_row = [], []
@@ -64,14 +47,12 @@ def evaluate_all_stages(model, tag):
               f"  machine_rec {result['machine_rec']:.4f}")
     return row, full_row
 
-
 def save_checkpoint(model, stage, lr):
     sd = {
         k: (v.half() if v.is_floating_point() else v)
         for k, v in model.state_dict().items()
     }
     torch.save(sd, os.path.join(CKPT_DIR, f"seqacc_stage{stage}_lr{lr}.pt"))
-
 
 def save(R, R_full, chosen_lrs, selection_log, branches, branches_full, note):
     out = {
@@ -94,7 +75,6 @@ def save(R, R_full, chosen_lrs, selection_log, branches, branches_full, note):
     with open(RESULTS_PATH, "w") as f:
         json.dump(out, f, indent=2)
     print(f"  saved {RESULTS_PATH} ({len(R)} rows)")
-
 
 def main():
     seed_everything(SEED)
@@ -141,7 +121,6 @@ def main():
         start_weights = copy.deepcopy(model.state_dict())
         vdata = dl.stage_eval(stage, "validation")
         vlabels = vdata["label"].to_numpy()
-
         best_sel = -1
         best_model = None
         best_lr = None
@@ -182,7 +161,6 @@ def main():
     A = np.array(R)
     print(f"\nchosen learning rates: {chosen_lrs}")
     print(f"ACC {acc(A):.4f}   BWT {bwt(A):.4f}   FWT {fwt(A):.4f}")
-
 
 if __name__ == "__main__":
     main()

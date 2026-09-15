@@ -25,8 +25,6 @@ def find_stage(src): # return continual learning stage for machine generated row
  
 def main():
     os.makedirs("data", exist_ok=True)
- 
-    # Load all three splits and tag each row with which split it came from
     frames = []
     for split in ["train", "validation", "test"]:
         df = load_dataset(HF_DATASET)[split].to_pandas()
@@ -42,16 +40,11 @@ def main():
  
     machine["stage"] = machine["src"].apply(find_stage)
  
-    # Seeded per-split shuffle of the human rows -> shuffle_rank
     rng = np.random.default_rng(SEED)
     human["shuffle_rank"] = -1
     for split in ["train", "validation", "test"]:
         idx = human.index[human["mage_split"] == split].to_numpy()
         human.loc[rng.permutation(idx), "shuffle_rank"] = np.arange(len(idx))
- 
-    # Seeded shuffle of machine rows within each (split, stage) -> shuffle_rank.
-    # Runs after the human block so the human ordering (and therefore the
-    # frozen human sample) is identical to the original files.
     machine["shuffle_rank"] = -1
     for split in ["train", "validation", "test"]:
         for stage in sorted(machine["stage"].unique()):
@@ -62,7 +55,6 @@ def main():
  
     machine = machine[["text", "label", "stage", "mage_split", "shuffle_rank"]]
     human = human[["text", "label", "mage_split", "shuffle_rank"]]
- 
     machine.to_parquet("data/machine.parquet", index=False)
     human.to_parquet("data/human.parquet", index=False)
  
@@ -70,7 +62,6 @@ def main():
     print(f"human rows:   {len(human)}")
     print("stage counts:")
     print(machine["stage"].value_counts().sort_index())
- 
  
 if __name__ == "__main__":
     main()

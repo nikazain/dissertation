@@ -1,9 +1,3 @@
-"""
-Times one stage-1 training at the current TRAIN_CAP and one learning rate.
-Run as:  TRAIN_CAP=5000 python -u calibrate.py
-Prints val AUROC per epoch (from train_stage) plus total and per-epoch time.
-"""
-
 import time
 
 from config import SEED, TRAIN_CAP

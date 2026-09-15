@@ -4,7 +4,6 @@ from datasets import load_dataset
 
 OUT_DIR = os.path.dirname(os.path.abspath(__file__))
 
-# three OpenAI generations
 STAGES = {
     "A": "text-davinci-002",
     "B": "text-davinci-003",

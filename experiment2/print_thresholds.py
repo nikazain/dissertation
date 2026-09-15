@@ -1,7 +1,7 @@
 import json
 import re
 
-METRIC = "avg_rec"   # switch to "machine_rec" / "human_rec" / "threshold"
+METRIC = "avg_rec" 
 
 with open("results_thresholds.json") as f:
     data = json.load(f)

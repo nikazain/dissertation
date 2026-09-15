@@ -1,30 +1,7 @@
-"""
-RUN THIS (via a small script) - trains one model on one stage at one lr.
-
-Also defines new_model(): a fresh Longformer detector (used as the M0
-starting point and for the pooled upper bound).
-
-    from train import train_stage, new_model
-    model = train_stage(new_model(), stage=1, lr=3e-5)
-
-Smoke test on a small chunk (confirms the loop runs before spending compute):
-    model = train_stage(new_model(), stage=1, lr=3e-5, limit=200)
-
-Keeps the epoch with the best validation AUROC. Validation uses the
-CURRENT stage's validation set only, so the naive sequential baseline is
-not accidentally helped to resist forgetting.
-
-Memory: micro-batches of MICRO_BATCH with ACCUM_STEPS accumulation give
-an effective batch of 64 (unchanged), sized for 24GB GPUs at MAX_LEN 1024.
-fp16 autocast runs on CUDA only; MPS/CPU smoke tests are unaffected.
-"""
-
 import copy
-
 import torch
 from torch.utils.data import DataLoader, TensorDataset
 from transformers import AutoModelForSequenceClassification, get_linear_schedule_with_warmup
-
 import data_loading as dl
 from data_loading import MODEL_NAME, MAX_LEN, tokenizer
 from metrics import evaluate
@@ -36,27 +13,17 @@ ACCUM_STEPS = 8    # optimizer step every 8 micro-batches -> effective 64
 WARMUP_RATIO = 0.06
 USE_AMP = True     # fp16 on CUDA; ignored elsewhere
 
-
 def new_model():
     """A fresh Longformer with a 2-class classification head."""
     return AutoModelForSequenceClassification.from_pretrained(MODEL_NAME, num_labels=2)
-
 
 def train_stage(model, stage, lr, limit=None, max_len=MAX_LEN,
                 batch_size=MICRO_BATCH, accum_steps=ACCUM_STEPS,
                 train_df=None, val_df=None):
     device = get_device()
     model.to(device)
-
-    # train_df / val_df override the stage data when provided (used by
-    # pooled.py so the upper bound trains with this exact loop; `stage`
-    # is then only a label for log lines).
     train_data = dl.stage_train(stage) if train_df is None else train_df
     val_data = dl.stage_eval(stage, "validation") if val_df is None else val_df
-
-    # Smoke-test mode: use only a small chunk. Shuffle first so the chunk
-    # contains both machine and human rows (otherwise validation AUROC has
-    # only one class and errors).
     if limit is not None:
         train_data = train_data.sample(frac=1, random_state=0).head(limit)
         val_data = val_data.sample(frac=1, random_state=0).head(limit)

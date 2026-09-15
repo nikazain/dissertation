@@ -1,20 +1,5 @@
-"""
-Truncation experiment, analysis pass (no GPU). Consumes the probabilities
-written by truncate_eval.py and produces accuracy as a function of token
-budget, following the deployed-threshold protocol of the main threshold
-analysis: for each model and each budget L, the threshold is fitted on the
-model's own-stage validation set truncated to L, then applied to the test
-sets truncated to L. AUROC at each budget is reported alongside, so
-ranking loss and decision loss can be told apart.
-
-Run from experiment3/ after the scoring pass has been pulled:
-    python truncation_analysis.py
-Output: results_truncation.json + printed tables.
-"""
-
 import json
 import os
-
 import numpy as np
 from sklearn.metrics import roc_auc_score
 
@@ -23,17 +8,14 @@ PROBS = os.path.join(E2, "probs")
 LENGTHS = [1024, 512, 256, 128, 64, 32]
 GRID = np.arange(0.001, 1.0, 0.001)
 
-
 def load(path):
     d = np.load(path)
     return d["probs"], d["labels"]
-
 
 def fit_threshold(probs, labels):
     pred = probs[None, :] > GRID[:, None]
     correct = np.where(labels[None, :] == 0, pred, ~pred)
     return GRID[int(np.argmax(correct.mean(axis=1)))]
-
 
 def grade(probs, labels, t):
     pred = probs > t
@@ -45,7 +27,6 @@ def grade(probs, labels, t):
         "auroc": float(roc_auc_score(1 - labels, probs)),
         "threshold": float(t),
     }
-
 
 def main():
     with open(os.path.join(E2, "results.json")) as f:
@@ -63,7 +44,6 @@ def main():
     for L in LENGTHS:
         out[L] = {}
         for name, tag, own_stage in models:
-            # deployed threshold at this budget
             if own_stage is not None:
                 vp, vl = load(os.path.join(
                     PROBS, f"trunc{L}_val_{tag}_stage{own_stage}.npz"))
@@ -83,8 +63,7 @@ def main():
     with open("results_truncation.json", "w") as f:
         json.dump(out, f, indent=2)
 
-    # summary: mean accuracy over the five stages, per model per budget
-    print("\n=== mean test accuracy over stages (deployed threshold per budget) ===")
+    print("\nmean test accuracy over stages (deployed threshold per budget)")
     print("budget " + "".join(f"  {n:>7s}" for n, _, _ in models))
     for L in LENGTHS:
         row = f"{L:6d}"
@@ -93,7 +72,7 @@ def main():
             row += f"  {np.mean(vals):7.3f}"
         print(row)
 
-    print("\n=== mean test AUROC over stages ===")
+    print("\nmean test AUROC over stages")
     print("budget " + "".join(f"  {n:>7s}" for n, _, _ in models))
     for L in LENGTHS:
         row = f"{L:6d}"

@@ -1,16 +1,5 @@
 """
-Human luck check (Lampos, meetings 7 and 8): was the fixed human test sample
-a lucky draw? Score a fresh, never-used set of human texts with M5 and pooled,
-keep each model's deployed cutoff and the saved machine test probabilities
-unchanged, and compare accuracy / AUROC / human recall against the fixed sample.
-
-Fresh pool, in order of preference:
-  1. test-split humans beyond the fixed sample (shuffle_rank >= HUMAN_SIZES["test"])
-  2. train-split humans never used for training (shuffle_rank >= TRAIN_CAP)
-Both have zero overlap with anything a model was trained, validated or tested on.
-
-Run from experiment2/ on a GPU machine:  python -u human_luck_check.py
-Output: results_human_luck.json + printed table.
+Human luck check 
 """
 
 import json

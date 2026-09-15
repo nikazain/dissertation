@@ -1,22 +1,7 @@
-"""
-Scores every saved checkpoint (stage winners M1..M5 and the pooled model) on
-every stage's VALIDATION set, saving per-row probabilities. These are the
-inputs the threshold analysis needs: thresholds are fitted on validation and
-applied to the already-saved test probabilities, so no test data is ever used
-for fitting.
-
-Run as:  nohup python -u score_validation.py > score_val.log 2>&1 &
-Roughly 30 evaluations, a few hours on one GPU.
-
-Outputs: probs/val_{tag}_stage{j}.npz
-"""
-
 import glob
 import os
-
 import numpy as np
 import torch
-
 import data_loading as dl
 from config import STAGES
 from metrics import evaluate
@@ -25,13 +10,11 @@ from train import new_model
 PROBS_DIR = "probs"
 CKPT_DIR = "checkpoints"
 
-
 def load_checkpoint(path):
     model = new_model()
     sd = torch.load(path, map_location="cpu")
     model.load_state_dict(sd)
     return model
-
 
 def main():
     os.makedirs(PROBS_DIR, exist_ok=True)
@@ -66,7 +49,6 @@ def main():
         torch.cuda.empty_cache()
 
     print("\nvalidation scoring complete")
-
 
 if __name__ == "__main__":
     main()

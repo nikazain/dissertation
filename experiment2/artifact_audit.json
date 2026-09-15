@@ -1,0 +1,476 @@
+{
+  "markers": [
+    {
+      "marker": "token <|endoftext|>",
+      "machine": 0.0,
+      "human": 0.0,
+      "ratio": 1.0,
+      "suspect": false
+    },
+    {
+      "marker": "token </s>",
+      "machine": 0.0,
+      "human": 0.0,
+      "ratio": 1.0,
+      "suspect": false
+    },
+    {
+      "marker": "token <s>",
+      "machine": 0.0,
+      "human": 0.0,
+      "ratio": 1.0,
+      "suspect": false
+    },
+    {
+      "marker": "token <pad>",
+      "machine": 0.0,
+      "human": 0.0,
+      "ratio": 1.0,
+      "suspect": false
+    },
+    {
+      "marker": "token <unk>",
+      "machine": 0.0,
+      "human": 0.0,
+      "ratio": 1.0,
+      "suspect": false
+    },
+    {
+      "marker": "token [CLS]",
+      "machine": 0.0,
+      "human": 0.0,
+      "ratio": 1.0,
+      "suspect": false
+    },
+    {
+      "marker": "token [SEP]",
+      "machine": 0.0,
+      "human": 0.0,
+      "ratio": 1.0,
+      "suspect": false
+    },
+    {
+      "marker": "token [PAD]",
+      "machine": 0.0,
+      "human": 0.0,
+      "ratio": 1.0,
+      "suspect": false
+    },
+    {
+      "marker": "token <|im_start|>",
+      "machine": 0.0,
+      "human": 0.0,
+      "ratio": 1.0,
+      "suspect": false
+    },
+    {
+      "marker": "token <|im_end|>",
+      "machine": 0.0,
+      "human": 0.0,
+      "ratio": 1.0,
+      "suspect": false
+    },
+    {
+      "marker": "token <eos>",
+      "machine": 0.0,
+      "human": 0.0,
+      "ratio": 1.0,
+      "suspect": false
+    },
+    {
+      "marker": "token <bos>",
+      "machine": 0.0,
+      "human": 0.0,
+      "ratio": 1.0,
+      "suspect": false
+    },
+    {
+      "marker": "token <|assistant|>",
+      "machine": 0.0,
+      "human": 0.0,
+      "ratio": 1.0,
+      "suspect": false
+    },
+    {
+      "marker": "unicode zero-width",
+      "machine": 0.0,
+      "human": 0.0,
+      "ratio": 1.0,
+      "suspect": false
+    },
+    {
+      "marker": "unicode non-breaking space",
+      "machine": 0.0,
+      "human": 0.0,
+      "ratio": 1.0,
+      "suspect": false
+    },
+    {
+      "marker": "unicode curly quotes",
+      "machine": 0.0,
+      "human": 0.0,
+      "ratio": 1.0,
+      "suspect": false
+    },
+    {
+      "marker": "unicode em/en dash",
+      "machine": 0.0,
+      "human": 0.0,
+      "ratio": 1.0,
+      "suspect": false
+    },
+    {
+      "marker": "unicode ellipsis char",
+      "machine": 0.0,
+      "human": 0.0,
+      "ratio": 1.0,
+      "suspect": false
+    },
+    {
+      "marker": "phrase 'as an ai'",
+      "machine": 0.002111246735551266,
+      "human": 0.0002916650094791128,
+      "ratio": 7.23860136435893,
+      "suspect": false
+    },
+    {
+      "marker": "phrase 'as a language model'",
+      "machine": 3.1934824571363686e-05,
+      "human": 6.628750215434382e-06,
+      "ratio": 4.8176237651867835,
+      "suspect": false
+    },
+    {
+      "marker": "phrase 'i'm sorry, but'",
+      "machine": 0.0018167366867264676,
+      "human": 0.0004971562661575786,
+      "ratio": 3.654256841149086,
+      "suspect": false
+    },
+    {
+      "marker": "phrase 'i cannot'",
+      "machine": 0.003654763256500511,
+      "human": 0.0033939201103024034,
+      "ratio": 1.0768560065413166,
+      "suspect": false
+    },
+    {
+      "marker": "phrase 'sure! here'",
+      "machine": 2.1289883047575792e-05,
+      "human": 1.3257500430868763e-05,
+      "ratio": 1.6058745883955945,
+      "suspect": false
+    },
+    {
+      "marker": "phrase 'certainly! here'",
+      "machine": 1.0644941523787896e-05,
+      "human": 0.0,
+      "ratio": Infinity,
+      "suspect": false
+    },
+    {
+      "marker": "phrase 'here is a'",
+      "machine": 0.02860650618825934,
+      "human": 0.03957363878614326,
+      "ratio": 0.7228677237099543,
+      "suspect": false
+    },
+    {
+      "marker": "phrase 'here's a'",
+      "machine": 0.018933802656977403,
+      "human": 0.02769491840008485,
+      "ratio": 0.6836561994318566,
+      "suspect": false
+    },
+    {
+      "marker": "phrase 'in conclusion,'",
+      "machine": 0.001745770409901215,
+      "human": 0.0003314375107717191,
+      "ratio": 5.26726864993755,
+      "suspect": false
+    },
+    {
+      "marker": "phrase 'overall,'",
+      "machine": 0.010201402293630066,
+      "human": 0.00659560646435721,
+      "ratio": 1.546696630364266,
+      "suspect": false
+    },
+    {
+      "marker": "starts with quote",
+      "machine": 0.021626972862495743,
+      "human": 0.019230004374975143,
+      "ratio": 1.1246473188867228,
+      "suspect": false
+    },
+    {
+      "marker": "contains newline",
+      "machine": 0.0,
+      "human": 0.0,
+      "ratio": 1.0,
+      "suspect": false
+    },
+    {
+      "marker": "double space",
+      "machine": 0.0,
+      "human": 0.0,
+      "ratio": 1.0,
+      "suspect": false
+    }
+  ],
+  "duplicates": {
+    "machine": 2,
+    "human": 50,
+    "cross": 0
+  },
+  "heads_tails": {
+    "machine_heads": [
+      [
+        "once upon a tim",
+        1195
+      ],
+      [
+        "media playback",
+        1193
+      ],
+      [
+        "in this paper,",
+        903
+      ],
+      [
+        "[substeps] you",
+        380
+      ],
+      [
+        "while it is tru",
+        366
+      ],
+      [
+        "breaking news:",
+        360
+      ],
+      [
+        "counter-argumen",
+        327
+      ],
+      [
+        "in addition to",
+        307
+      ],
+      [
+        "there are a few",
+        301
+      ],
+      [
+        "in this paper w",
+        300
+      ],
+      [
+        "we consider the",
+        283
+      ],
+      [
+        "[substeps] if y",
+        281
+      ],
+      [
+        "scientists have",
+        278
+      ],
+      [
+        "this repository",
+        275
+      ],
+      [
+        "[header] how to",
+        258
+      ]
+    ],
+    "human_heads": [
+      [
+        "in this paper,",
+        442
+      ],
+      [
+        "media playback",
+        404
+      ],
+      [
+        "i believe that",
+        224
+      ],
+      [
+        "this place is a",
+        169
+      ],
+      [
+        "[substeps] if y",
+        146
+      ],
+      [
+        "this repository",
+        141
+      ],
+      [
+        "i love this pla",
+        141
+      ],
+      [
+        "we consider the",
+        135
+      ],
+      [
+        "[substeps] you",
+        130
+      ],
+      [
+        "my husband and",
+        124
+      ],
+      [
+        "in this paper w",
+        117
+      ],
+      [
+        "this review is",
+        116
+      ],
+      [
+        "this place was",
+        115
+      ],
+      [
+        "love this place",
+        112
+      ],
+      [
+        "this paper pres",
+        106
+      ]
+    ],
+    "machine_tails": [
+      [
+        "in the future.",
+        418
+      ],
+      [
+        "ssist you with?",
+        224
+      ],
+      [
+        "years to come.",
+        195
+      ],
+      [
+        "ound the world.",
+        165
+      ],
+      [
+        "- - - - - - - -",
+        126
+      ],
+      [
+        "help you with?",
+        116
+      ],
+      [
+        "ater this year.",
+        115
+      ],
+      [
+        "united states.",
+        114
+      ],
+      [
+        "the permalink.",
+        110
+      ],
+      [
+        "... read more \"",
+        92
+      ],
+      [
+        "an ever before.",
+        82
+      ],
+      [
+        "past visitors.",
+        80
+      ],
+      [
+        "ing experience.",
+        79
+      ],
+      [
+        "etrieved from \"",
+        79
+      ],
+      [
+        "ights reserved.",
+        75
+      ]
+    ],
+    "human_tails": [
+      [
+        ". happy cmving!",
+        3145
+      ],
+      [
+        "in the article.",
+        672
+      ],
+      [
+        "itation needed]",
+        347
+      ],
+      [
+        "change my view.",
+        255
+      ],
+      [
+        "are available.",
+        152
+      ],
+      [
+        "in the future.",
+        130
+      ],
+      [
+        "dedicated page.",
+        125
+      ],
+      [
+        "available at .",
+        122
+      ],
+      [
+        "won't be back.",
+        112
+      ],
+      [
+        "gestion email .",
+        90
+      ],
+      [
+        "to the camera.",
+        81
+      ],
+      [
+        "united states.",
+        81
+      ],
+      [
+        "somewhere else.",
+        76
+      ],
+      [
+        "be going back.",
+        75
+      ],
+      [
+        "change my view!",
+        68
+      ]
+    ]
+  }
+}
